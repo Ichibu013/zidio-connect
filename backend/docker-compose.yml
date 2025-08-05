@@ -1,0 +1,161 @@
+version: '3.8'
+
+volumes:
+  zidio-mysql-data:
+
+services:
+  mysqldb:
+    image: mysql:8.0
+    restart: always
+    networks:
+      - zidio-network
+    environment:
+      - MYSQL_DATABASE=zidio_connect
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "3307:3306"
+    volumes:
+      - zidio-mysql-data:/var/lib/mysql
+
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: zidio-connect-api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/zidio_connect?allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_PROFILES_ACTIVE=docker
+    command: ["java", "-jar", "/app/api-gateway.jar"]
+    depends_on:
+      - mysqldb
+      - service-admin
+      - service-user
+      - service-application
+      - service-job
+      - service-analytics
+    networks:
+      - zidio-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  service-admin:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: zidio-connect-service-admin
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/zidio_connect?allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_PROFILES_ACTIVE=docker
+      - SERVER_PORT=8081
+    command: ["java", "-jar", "/app/service-admin.jar"]
+    depends_on:
+      - mysqldb
+    networks:
+      - zidio-network
+
+  service-user:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: zidio-connect-service-user
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/zidio_connect?allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_PROFILES_ACTIVE=docker
+      - SERVER_PORT=8082
+    command: ["java", "-jar", "/app/service-user.jar"]
+    depends_on:
+      - mysqldb
+    networks:
+      - zidio-network
+
+  service-application:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: zidio-connect-service-application
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/zidio_connect?allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_PROFILES_ACTIVE=docker
+      - SERVER_PORT=8083
+    command: ["java", "-jar", "/app/service-application.jar"]
+    depends_on:
+      - mysqldb
+    networks:
+      - zidio-network
+
+  service-job:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: zidio-connect-service-job
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/zidio_connect?allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_PROFILES_ACTIVE=docker
+      - SERVER_PORT=8084
+    command: ["java", "-jar", "/app/service-job.jar"]
+    depends_on:
+      - mysqldb
+    networks:
+      - zidio-network
+
+  service-analytics:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: zidio-connect-service-analytics
+    ports:
+      - "8085:8085"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/zidio_connect?allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_PROFILES_ACTIVE=docker
+      - SERVER_PORT=8085
+    command: ["java", "-jar", "/app/service-analytics.jar"]
+    depends_on:
+      - mysqldb
+    networks:
+      - zidio-network
+
+
+
+  # Add a database service if needed
+  # db:
+  #   image: mcr.microsoft.com/mssql/server:2019-latest
+  #   environment:
+  #     - ACCEPT_EULA=Y
+  #     - SA_PASSWORD=YourStrongPassword123!
+  #   ports:
+  #     - "1433:1433"
+  #   volumes:
+  #     - mssql-data:/var/opt/mssql
+  #   networks:
+  #     - zidio-network
+
+networks:
+  zidio-network:
+    driver: bridge
