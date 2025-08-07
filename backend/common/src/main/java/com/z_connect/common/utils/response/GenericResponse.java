@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -24,9 +23,6 @@ import java.util.Map;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(description = "Generic API Response Wrapper")
 public class GenericResponse<T> implements Serializable {
-
-    @Schema(description = "HTTP Status Code")
-    private HttpStatus httpStatus;
 
     @Schema(description = "Request ID for tracking")
     private String requestId;
