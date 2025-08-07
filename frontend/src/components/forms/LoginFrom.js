@@ -45,7 +45,7 @@ export default function LoginForm({ onSubmit }) {
             </label>
           </div>
           <a
-            href="/forgot-password"
+            href="/Login/ForgotPassword"
             className="text-sm text-blue-600 hover:underline"
           >
             Forgot password?
