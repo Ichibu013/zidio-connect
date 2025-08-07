@@ -2,9 +2,8 @@
 import { useState } from "react";
 import TwoColumnLayout from "@/components/Layout/TwoColumnLayout";
 import SignupForm from "@/components/forms/SignupForm";
-import LoginForm from "@/components/forms/LoginFrom";
 
-export default function Home() {
+export default function Signup() {
   const [isCandidate, setIsCandidate] = useState(true);
 
   const handleToggle = async () => {
@@ -18,7 +17,11 @@ export default function Home() {
   return (
     <TwoColumnLayout
       left={
-        <LoginForm onSubmit={handleSubmit} />
+        <SignupForm
+          onToggle={handleToggle}
+          isCandidate={isCandidate}
+          handleSubmit={handleSubmit}
+        />
       }
       right={null}
     />
