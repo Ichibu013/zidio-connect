@@ -1,9 +1,9 @@
 import ArrowButton from "../buttons/Arrow-Button";
 import SocialButtons from "../buttons/Social-Buttons";
-import Heading from "../Heading";
+import Heading from "../misc/Heading";
 import EyeIcon from "../icons/Eye-Icon";
-import InputBox from "../input-box";
-import OR from "../Or-seperator";
+import InputBox from "../inputBox/input-box";
+import OR from "../misc/Or-seperator";
 
 export default function LoginForm({ onSubmit }) {
   return (

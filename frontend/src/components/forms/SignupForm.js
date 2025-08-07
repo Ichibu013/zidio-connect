@@ -1,12 +1,12 @@
-import AccountTypeToggle from "../AccoutTypeToggle";
+import AccountTypeToggle from "../toggles/AccoutTypeToggle";
 import ArrowButton from "../buttons/Arrow-Button";
 import EyeIcon from "../icons/Eye-Icon";
-import Heading from "../Heading";
-import InputBox from "../input-box";
-import OR from "../Or-seperator";
+import Heading from "../misc/Heading";
+import InputBox from "../inputBox/input-box";
+import OR from "../misc/Or-seperator";
 import SocialButtons from "../buttons/Social-Buttons";
 
-export default function SignupForm({ onToggle, isCandidate,onSubmit }) {
+export default function SignupForm({ onToggle, isCandidate, onSubmit }) {
   return (
     // Form card
     <div className="bg-white p-6 sm:p-8 rounded-lg w-full max-w-lg">
@@ -18,10 +18,7 @@ export default function SignupForm({ onToggle, isCandidate,onSubmit }) {
           Login
         </a>
       </p>
-          <AccountTypeToggle
-              onToggle={onToggle}
-              isCandidate={isCandidate}
-          />
+      <AccountTypeToggle onToggle={onToggle} isCandidate={isCandidate} />
       <form onSubmit={onSubmit}>
         {/* Full Name and Username Inputs */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
