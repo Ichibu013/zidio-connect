@@ -97,6 +97,9 @@ public class Users {
     private Company company;
 
 
+    @Column(name = "t_n_c_accpeted")
+    private boolean tncAccepted;
+
     /**
      * The timestamp when the user record was created.
      * This is automatically set by the database.

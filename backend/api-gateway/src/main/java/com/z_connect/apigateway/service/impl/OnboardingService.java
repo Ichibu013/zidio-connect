@@ -38,8 +38,9 @@ public class OnboardingService extends BaseService implements IOnboardingService
 
     @Override
     @Transactional
-    public GenericResponse<?> signup(SignupDto signupDto) {
-        if(userValidator.isEmpty(signupDto.getEmail(), signupDto.getPassword(), signupDto.getPasswordConfirm(), signupDto.getRole(), signupDto.getPhoneNumber())) {
+    public GenericResponse<String> signup(SignupDto signupDto) {
+        log.info("SignupDto: {}", signupDto);
+        if(userValidator.isEmpty(signupDto.getEmail(), signupDto.getPassword(), signupDto.getPasswordConfirm(), signupDto.getRole())) {
             log.warn("SignupDto is empty");
         }
 
@@ -54,7 +55,7 @@ public class OnboardingService extends BaseService implements IOnboardingService
             log.info("Saved user: {}", savedUser);
             return responseFactory
                     .successResponse(
-                            mapper.map(savedUser, SignupDto.class),
+                            "Registered Successfully.",
                     "success.signup"
                     );
 

@@ -2,7 +2,8 @@ package com.z_connect.common.exceptions;
 
 import com.z_connect.common.utils.response.GenericResponse;
 import com.z_connect.common.utils.response.GenericResponseFactory;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -10,10 +11,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Map;
 
-@Slf4j
+
 @RestControllerAdvice
 public class GlobalExceptionHandler extends RuntimeException {
 
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
     private final GenericResponseFactory genericResponseFactory;
 
     public GlobalExceptionHandler(GenericResponseFactory genericResponseFactory) {
@@ -24,7 +26,7 @@ public class GlobalExceptionHandler extends RuntimeException {
     public ResponseEntity<GenericResponse<Map<String, String>>> handleUserNotFoundException(UserExistsException ex) {
         log.error("UserExistsException: {}", ex.getMessage());
         return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
+                .status(HttpStatus.FOUND    )
                 .body(genericResponseFactory
                         .errorResponse(
                                 getErrorDetails(ex),

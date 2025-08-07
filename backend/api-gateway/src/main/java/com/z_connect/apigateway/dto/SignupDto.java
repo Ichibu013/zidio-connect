@@ -18,14 +18,12 @@ public class SignupDto {
 
     private String email;
 
-    private String phoneNumber;
-
     private String password;
 
     private String passwordConfirm;
 
     private Role role;
 
-    private Long companyId;
+    private boolean tncAccepted;
 
 }

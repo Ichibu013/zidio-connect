@@ -6,7 +6,7 @@ import com.z_connect.common.utils.response.GenericResponse;
 
 public interface IOnboardingService {
 
-    GenericResponse<?> signup(SignupDto signupDto);
+    GenericResponse<String> signup(SignupDto signupDto);
 
     GenericResponse<?> login(LoginDto loginDto);
 
