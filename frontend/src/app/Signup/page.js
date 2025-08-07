@@ -10,19 +10,9 @@ export default function Signup() {
     setIsCandidate(!isCandidate);
   };
 
-  const handleSubmit = async () => {
-    console.log("ok");
-  };
-
   return (
     <TwoColumnLayout
-      left={
-        <SignupForm
-          onToggle={handleToggle}
-          isCandidate={isCandidate}
-          handleSubmit={handleSubmit}
-        />
-      }
+      left={<SignupForm onToggle={handleToggle} isCandidate={isCandidate} />}
       right={null}
     />
   );
