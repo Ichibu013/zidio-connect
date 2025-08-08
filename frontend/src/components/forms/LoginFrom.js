@@ -4,8 +4,18 @@ import Heading from "../misc/Heading";
 import EyeIcon from "../icons/Eye-Icon";
 import InputBox from "../inputBox/input-box";
 import OR from "../misc/Or-seperator";
+import { useState } from "react"
+import { IoArrowForward } from "react-icons/io5";
 
 export default function LoginForm({ onSubmit }) {
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  // Function to toggle the state of the password visibility.
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     // Form card
     <div className="bg-white p-6 sm:p-8 rounded-lg w-full max-w-lg">
@@ -26,10 +36,19 @@ export default function LoginForm({ onSubmit }) {
         {/* Password Input with Eye Icon */}
         <div className="mb-4 relative">
           {/* Password InputBox component */}
-          <InputBox placeholder="Password" />
-          <span className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 cursor-pointer">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="text-black w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition duration-200"
+          />
+          <span
+            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 cursor-pointer"
+            onClick={togglePasswordVisibility}
+          >
             {/* Eye icon component */}
-            <EyeIcon />
+            <EyeIcon showPassword={showPassword} />
           </span>
         </div>
         {/* Remember me Checkbox and Forgot password link */}
@@ -52,7 +71,11 @@ export default function LoginForm({ onSubmit }) {
           </a>
         </div>
         {/* Login Button */}
-        <ArrowButton text={"Sign in"} />
+        <ArrowButton
+          text={"Sign in"}
+          icon={<IoArrowForward size={18} />}
+          type="submit"
+        />
         {/* OR separator */}
         <OR />
 
