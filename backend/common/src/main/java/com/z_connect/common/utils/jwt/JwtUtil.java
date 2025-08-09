@@ -1,9 +1,11 @@
 package com.z_connect.common.utils.jwt;
 
+import com.z_connect.common.exceptions.AuthenticationException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -12,10 +14,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.function.Function;
 
+@Slf4j
 @Component
 public class JwtUtil {
 
-    private static final String secretKey = "zidio_connect_secret_key";
+    private static final String secretKey = "yoZW5jb2RlZCBieSBzZWN1cml0eS1taW5kZWQgYmFzZTY0LWVuY29kZXI";
     private static final long jwtExpirationMs = 3600000 ;
 
 
@@ -32,8 +35,16 @@ public class JwtUtil {
         return Jwts.parser()
                 .verifyWith(getSigningKey())
                 .build()
-                .parseSignedClaims(token)
+                .parseSignedClaims(normalizeToken(token))
                 .getPayload();
+    }
+
+    private String normalizeToken(String token) {
+        log.info("Normalizing token {}", token);
+        if (token.isEmpty() || token.trim().isEmpty()) {
+            throw new AuthenticationException("JWT is empty or blank");
+        }
+        return token;
     }
 
     private SecretKey getSigningKey() {
@@ -42,7 +53,9 @@ public class JwtUtil {
     }
 
     public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+        HashMap<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("role", userDetails.getAuthorities());
+        return generateToken(extraClaims, userDetails);
     }
 
     private String generateToken(HashMap<String, Object> extraClaims, UserDetails userDetails) {
@@ -57,7 +70,7 @@ public class JwtUtil {
 
     public boolean isTokenValid(String token, UserDetails userDetails){
         final String username = extractEmail(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        return (username != null && username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
     private boolean isTokenExpired(String token) {

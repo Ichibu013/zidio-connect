@@ -1,5 +1,6 @@
 package com.z_connect.apigateway.service.impl;
 
+import com.z_connect.apigateway.dto.AuthResponse;
 import com.z_connect.apigateway.dto.LoginDto;
 import com.z_connect.apigateway.dto.SignupDto;
 import com.z_connect.apigateway.service.validator.UserValidator;
@@ -18,9 +19,17 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.sql.Timestamp;
+import java.util.Collections;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
@@ -44,6 +53,15 @@ class OnboardingServiceTest {
     @Mock
     private UserValidator userValidator;
 
+    @Mock
+    private AuthenticationManager authenticationManager;
+
+    @Mock
+    private UserDetailsServiceImpl userDetailsService;
+
+    @Mock
+    private com.z_connect.common.utils.jwt.JwtUtil jwtUtil;
+
     @InjectMocks
     private OnboardingService onboardingService;
 
@@ -51,7 +69,7 @@ class OnboardingServiceTest {
     private LoginDto loginDto;
     private Users user;
     private GenericResponse<String> genericResponse;
-    private GenericResponse<LoginDto> loginResponse;
+    private GenericResponse<AuthResponse> loginResponse;
 
     @BeforeEach
     void setUp() {
@@ -69,7 +87,6 @@ class OnboardingServiceTest {
         loginDto = LoginDto.builder()
                 .email("john.doe@example.com")
                 .password("password123")
-                .role(Role.CANDIDATE)
                 .build();
 
         user = new Users();
@@ -183,12 +200,60 @@ class OnboardingServiceTest {
     }
     
     @Test
-    void login_ReturnsNull() {
+    void authenticate_Success_ReturnsTokenAndRole() {
+        // Arrange
+        // Mock AuthenticationManager to accept credentials
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+                .thenReturn(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
+
+        // Mock UserDetails with role CANDIDATE
+        UserDetails userDetails = new User(
+                loginDto.getEmail(),
+                "encodedPassword",
+                Collections.singleton(new SimpleGrantedAuthority("CANDIDATE"))
+        );
+        when(userDetailsService.loadUserByUsername(loginDto.getEmail())).thenReturn(userDetails);
+
+        // Mock JWT generation
+        when(jwtUtil.generateToken(userDetails)).thenReturn("token123");
+
+        // Prepare response from factory and capture AuthResponse passed in
+        ArgumentCaptor<AuthResponse> authResponseCaptor = ArgumentCaptor.forClass(AuthResponse.class);
+        when(responseFactory.successResponse(any(AuthResponse.class), eq("success.login")))
+                .thenReturn(loginResponse);
+
         // Act
-        GenericResponse<?> result = onboardingService.login(loginDto);
-        
+        GenericResponse<?> result = onboardingService.authenticate(loginDto);
+
         // Assert
-        assertNull(result);
+        assertNotNull(result);
+        assertEquals(loginResponse, result);
+        verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
+        verify(userDetailsService).loadUserByUsername(loginDto.getEmail());
+        verify(jwtUtil).generateToken(userDetails);
+        verify(responseFactory).successResponse(authResponseCaptor.capture(), eq("success.login"));
+
+        AuthResponse captured = authResponseCaptor.getValue();
+        assertNotNull(captured);
+        assertEquals("token123", captured.getToken());
+        assertNotNull(captured.getRole());
+        assertEquals(Set.of("CANDIDATE"), captured.getRole());
+    }
+
+    @Test
+    void authenticate_InvalidCredentials_ThrowsException() {
+        // Arrange
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+                .thenThrow(new BadCredentialsException("Bad credentials"));
+
+        // Act & Assert
+        assertThrows(BadCredentialsException.class, () -> onboardingService.authenticate(loginDto));
+
+        // Ensure no further processing happens
+        verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
+        verifyNoInteractions(userDetailsService);
+        verifyNoInteractions(jwtUtil);
+        verify(responseFactory, never()).successResponse(any(AuthResponse.class), anyString());
     }
     
     @Test
