@@ -17,11 +17,7 @@ import java.time.LocalDate;
  * Corresponds to the 'education' table in the database.
  */
 @Entity
-@Table(name = "education",
-        indexes = {
-                @Index(name = "idx_education_candidate", columnList = "candidate_id")
-        }
-)
+@Table(name = "education")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

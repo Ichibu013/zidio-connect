@@ -18,11 +18,7 @@ import java.time.LocalDate;
  * Corresponds to the 'work_experience' table in the database.
  */
 @Entity
-@Table(name = "work_experience",
-        indexes = {
-                @Index(name = "idx_work_experience_candidate", columnList = "candidate_id")
-        }
-)
+@Table(name = "work_experience")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

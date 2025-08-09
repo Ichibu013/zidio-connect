@@ -12,11 +12,7 @@ import java.sql.Timestamp;
 
 @Data
 @Entity
-@Table(name = "jobs",
-        indexes = {
-                @Index(name = "idx_jobs_company", columnList = "company_id")
-        }
-)
+@Table(name = "jobs")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Job {

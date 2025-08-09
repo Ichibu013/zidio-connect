@@ -16,12 +16,7 @@ import java.sql.Timestamp;
  * Corresponds to the 'job_views' table in the database.
  */
 @Entity
-@Table(name = "job_views",
-        indexes = {
-                @Index(name = "idx_job_views_job", columnList = "job_id"),
-                @Index(name = "idx_job_views_viewer", columnList = "viewer_id,viewed_at")
-        }
-)
+@Table(name = "job_views")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
