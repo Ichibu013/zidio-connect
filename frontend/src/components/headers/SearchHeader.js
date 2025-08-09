@@ -18,7 +18,7 @@ export default function SearchHeader({ btn1, btn2, btn3 }) {
   };
 
   return (
-    <div className="container flex max-w-6xl mx-auto justify-evenly bg-white py-4 sm:px-8 ">
+    <div className="container flex max-w-7xl mx-auto justify-evenly bg-white py-4 sm:px-8 z-25">
       {/* Loading Overlay */}
       {isLoading && <SpiningLoadingOverLay />}
 
