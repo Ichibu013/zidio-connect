@@ -39,7 +39,7 @@ api.interceptors.request.use(
     // If token present add to header as Bearer token
     const token = localStorage.getItem("jwt_token")
     if (token) {
-      config.headers["Authorization"] = "Bearer " + token;
+      config.headers["Authorization"] = `Bearer ${token}`;
     }
     return config;
   },

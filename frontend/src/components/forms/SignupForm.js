@@ -9,6 +9,10 @@ import { signup } from "@/services/auth/signupService";
 import { useState } from "react";
 import PasswordBox from "../inputBox/password-box";
 import { IoArrowForward } from "react-icons/io5";
+import { redirect } from "next/dist/server/api-utils";
+import { useRouter } from "next/navigation";
+import BasicHeader from "../headers/BasicHeader";
+import TickBox from "../misc/TickBox";
 
 export default function SignupForm({ onToggle, isCandidate }) {
   // State to control the visibility of the popup, initialized to false to hide it
@@ -21,6 +25,8 @@ export default function SignupForm({ onToggle, isCandidate }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [termsAccepted, setTermsAccepted] = useState(false);
+
+  const router = useRouter();
 
   // Function to toggle the popup visibility
   const togglePopup = () => {
@@ -41,19 +47,21 @@ export default function SignupForm({ onToggle, isCandidate }) {
       termsAccepted,
     };
 
-    const result = await signup(formData);
+    // const result = await signup(formData);
+    const result = 200;
 
     if (result == 200) {
-      console.log("Can be redirected!!");
+      router.push(`/verify-email?email=${email}`);
     }
   };
 
   return (
     // Form card
     <div className="bg-white p-6 sm:p-8 rounded-lg w-full max-w-lg">
+      <BasicHeader />
       {/* Heading and Login Link */}
       <Heading text={"Create Account"} />
-      <p className="text-gray-600 mb-6">
+      <p className="text-gray-600 mb-2">
         Already have an account?{" "}
         <a href="/Login" className="text-blue-600 hover:underline">
           Login
@@ -98,22 +106,12 @@ export default function SignupForm({ onToggle, isCandidate }) {
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
 
-        {/* Terms of Service Checkbox */}
-        <div className="flex items-center mb-6">
-          <input
-            type="checkbox"
-            id="terms"
-            className="mr-2 rounded text-blue-600 focus:ring-blue-500"
-            checked={termsAccepted}
-            onChange={(e) => setTermsAccepted(e.target.checked)}
-          />
-          <label htmlFor="terms" className="text-sm text-gray-600">
-            I've read and agree with your{" "}
-            <a href="/TermsCondition" className="text-blue-600 hover:underline">
-              Terms of Services
-            </a>
-          </label>
-        </div>
+        {/* Terms of Service Checkbox component */}
+        <TickBox
+          blackText={"I've read and agree with your"}
+          blueText={"Terms of Services"}
+          href={"/TermsCondition"}
+        />
         {/* Create Account Button */}
         <ArrowButton
           text={"Create Account"}
