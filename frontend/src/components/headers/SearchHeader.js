@@ -9,16 +9,16 @@ import { redirect } from "next/navigation";
 import { useState } from "react";
 import SpiningLoadingOverLay from "../LoadingOverLays/SpiningLoadingOverLay";
 
-export default function SearchHeader() {
+export default function SearchHeader({ btn1, btn2, btn3 }) {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleRedirect = () => {
     setIsLoading(true); // Set loading state to true
-    redirect("/Signup");
+    redirect("/");
   };
 
   return (
-    <div className="container flex max-w-6xl mx-auto justify-evenly bg-white py-4 ">
+    <div className="container flex max-w-6xl mx-auto justify-evenly bg-white py-4 sm:px-8 ">
       {/* Loading Overlay */}
       {isLoading && <SpiningLoadingOverLay />}
 
@@ -34,7 +34,7 @@ export default function SearchHeader() {
       </div>
 
       {/* Midldle Section: Search Bar  */}
-      <div className="hidden md:flex flex-grow justify-start lg:ml-8 lg:mr-36 rounded-md border border-gray-300">
+      <div className="sm:hidden md:flex flex-grow justify-start lg:ml-8 lg:mr-36 rounded-md border border-gray-300">
         {/* Location dropdown/input simulation */}
         <LocationDropdown />
 
@@ -42,7 +42,7 @@ export default function SearchHeader() {
         <SeachInputBox />
       </div>
       {/* Right Section: Action Buttons */}
-      <SearchHeaderActionBtns btn1={<SignInBtn />} btn3={<PostAJobBtn />} />
+      <SearchHeaderActionBtns btn1={btn1} btn2={btn2} btn3={btn3} />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 export default function TncBox() {
   return (
     // Main content area, structured with a two-column layout for desktop
-    <main className="mt-8 flex flex-col md:flex-row gap-12">
+    <main className="mt-8 flex flex-col md:flex-row gap-12 md:px-8 sm:px-8 xs:px-8">
       {/* Left column for the main text content */}
       <div className="md:w-3/4">
         {/* Section 1: Terms & Conditions */}

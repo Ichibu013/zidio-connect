@@ -4,16 +4,41 @@ import Heading from "../misc/Heading";
 import EyeIcon from "../icons/Eye-Icon";
 import InputBox from "../inputBox/input-box";
 import OR from "../misc/Or-seperator";
-import { useState } from "react"
+import { useState } from "react";
 import { IoArrowForward } from "react-icons/io5";
+import { signup } from "@/services/auth/signupService";
+import { login } from "@/services/auth/loginService";
 
-export default function LoginForm({ onSubmit }) {
+export default function LoginForm() {
+  // Varible that collect input field data
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  // Variable to set Password Visibility State
   const [showPassword, setShowPassword] = useState(false);
 
   // Function to toggle the state of the password visibility.
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    // Gather all the form data into a single object
+    const formData = {
+      email,
+      password,
+    };
+
+    const result = await login(formData);
+
+    if (result == 200) {
+      console.log("Can be redirected!!");
+    }
+    if (result == 500) {
+      console.error("Backend Server error");
+    }
   };
 
   return (
@@ -28,10 +53,14 @@ export default function LoginForm({ onSubmit }) {
         </a>
       </p>
 
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleFormSubmit}>
         <div className="mb-4">
           {/* Email InputBox component */}
-          <InputBox placeholder={"Email Address"} />
+          <InputBox
+            placeholder={"Email Address"}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
         {/* Password Input with Eye Icon */}
         <div className="mb-4 relative">

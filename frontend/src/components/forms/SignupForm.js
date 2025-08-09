@@ -5,7 +5,7 @@ import Heading from "../misc/Heading";
 import InputBox from "../inputBox/input-box";
 import OR from "../misc/Or-seperator";
 import SocialButtons from "../buttons/Social-Buttons";
-import { signup } from "@/services/signupService";
+import { signup } from "@/services/auth/signupService";
 import { useState } from "react";
 import PasswordBox from "../inputBox/password-box";
 import { IoArrowForward } from "react-icons/io5";

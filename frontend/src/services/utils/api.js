@@ -10,23 +10,13 @@ const api = axios.create({
   },
 });
 
-// Request interceptor to add the JWT token
-api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.setItem("jwt_token");
-    if (token) {
-      config.headers["Authorization"] = "Bearer ${token}";
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-
 // Response interceptor to handle token expiration
 api.interceptors.response.use(
   (response) => {
+    // Adding token and role to browser storage
+    localStorage.setItem("jwt_token", response.data.data.token);
+    localStorage.setItem("role", response.data.data.role)
+    console.log("Added jwt_token and Role to Local Storage");
     return response;
   },
   (error) => {
@@ -43,4 +33,18 @@ api.interceptors.response.use(
   }
 );
 
+// Request interceptor to add the JWT token
+api.interceptors.request.use(
+  (config) => {
+    // If token present add to header as Bearer token
+    const token = localStorage.getItem("jwt_token")
+    if (token) {
+      config.headers["Authorization"] = "Bearer " + token;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 export default api;
