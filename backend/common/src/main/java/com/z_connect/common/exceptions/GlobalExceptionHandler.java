@@ -74,6 +74,19 @@ public class GlobalExceptionHandler extends RuntimeException {
                 );
     }
 
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<GenericResponse<Map<String, String>>> handleAuthenticationException(AuthenticationException ex) {
+        log.error("AuthenticationException: {}", ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(genericResponseFactory
+                        .errorResponse(
+                                getErrorDetails(ex),
+                                "error.authentication.failed"
+                        )
+                );
+    }
+
     /**
      * Extracts error details from the provided exception by recursively traversing
      * the exception cause chain and returning a map containing an error message.

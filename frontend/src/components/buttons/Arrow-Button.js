@@ -1,6 +1,6 @@
 import ArrowIcon from "@/components/icons/Arrow-icon";
 
-export default function ArrowButton({ text }) {
+export default function ArrowButton({ text , icon}) {
   return (
     <button
       type="submit"
@@ -8,7 +8,7 @@ export default function ArrowButton({ text }) {
     >
       {text}
       {/* Arrow icon component */}
-      <ArrowIcon />
+      {icon}
     </button>
   );
 }

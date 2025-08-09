@@ -21,10 +21,6 @@ import java.time.LocalDate;
 @Table(name = "applications",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = {"candidate_id", "job_id"})
-        },
-        indexes = {
-                @Index(name = "idx_applications_status", columnList = "status"),
-                @Index(name = "idx_applications_candidate_job", columnList = "candidate_id,job_id")
         }
 )
 @Data
@@ -45,7 +41,7 @@ public class Application {
      * This is a many-to-one relationship to the 'users' table.
      */
     @ManyToOne
-    @JoinColumn(name = "candidate_id", nullable = false)
+    @JoinColumn(name = "candidate_id", nullable = false, unique = true)
     @NotNull
     private Users candidate;
 
@@ -54,7 +50,7 @@ public class Application {
      * This is a many-to-one relationship to the 'jobs' table.
      */
     @ManyToOne
-    @JoinColumn(name = "job_id", nullable = false)
+    @JoinColumn(name = "job_id", nullable = false, unique = true)
     @NotNull
     private Job job;
 

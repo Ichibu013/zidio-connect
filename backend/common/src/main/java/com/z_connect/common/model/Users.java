@@ -18,13 +18,7 @@ import java.sql.Timestamp;
  * Corresponds to the 'users' table in the database.
  */
 @Entity
-@Table(name = "users",
-        indexes = {
-                @Index(name = "idx_users_email", columnList = "email"),
-                @Index(name = "idx_users_role", columnList = "role"),
-                @Index(name = "idx_users_company", columnList = "company_id")
-        }
-)
+@Table(name = "users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -22,13 +22,7 @@ import java.time.LocalDate;
  * Corresponds to the 'jobs' table in the database.
  */
 @Entity
-@Table(name = "jobs_details",
-        indexes = {
-                @Index(name = "idx_jobs_active", columnList = "is_active,post_date"),
-                @Index(name = "idx_jobs_location", columnList = "location"),
-                @Index(name = "idx_jobs_salary", columnList = "salary_min,salary_max")
-        }
-)
+@Table(name = "jobs_details")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -41,7 +35,6 @@ public class JobDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
 
 
     /**

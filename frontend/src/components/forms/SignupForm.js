@@ -5,10 +5,19 @@ import Heading from "../misc/Heading";
 import InputBox from "../inputBox/input-box";
 import OR from "../misc/Or-seperator";
 import SocialButtons from "../buttons/Social-Buttons";
-import { signup } from "@/services/signupService";
+import { signup } from "@/services/auth/signupService";
 import { useState } from "react";
+import PasswordBox from "../inputBox/password-box";
+import { IoArrowForward } from "react-icons/io5";
+import { redirect } from "next/dist/server/api-utils";
+import { useRouter } from "next/navigation";
+import BasicHeader from "../headers/BasicHeader";
+import TickBox from "../misc/TickBox";
 
 export default function SignupForm({ onToggle, isCandidate }) {
+  // State to control the visibility of the popup, initialized to false to hide it
+  const [isOpen, setIsOpen] = useState(false);
+
   // Use state to manage the form inputs
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -16,6 +25,13 @@ export default function SignupForm({ onToggle, isCandidate }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [termsAccepted, setTermsAccepted] = useState(false);
+
+  const router = useRouter();
+
+  // Function to toggle the popup visibility
+  const togglePopup = () => {
+    setIsOpen(!isOpen);
+  };
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -31,19 +47,21 @@ export default function SignupForm({ onToggle, isCandidate }) {
       termsAccepted,
     };
 
-    const result = await signup(formData);
+    // const result = await signup(formData);
+    const result = 200;
 
     if (result == 200) {
-      console.log("Can be redirected!!");
+      router.push(`/verify-email?email=${email}`);
     }
   };
 
   return (
     // Form card
     <div className="bg-white p-6 sm:p-8 rounded-lg w-full max-w-lg">
+      <BasicHeader />
       {/* Heading and Login Link */}
       <Heading text={"Create Account"} />
-      <p className="text-gray-600 mb-6">
+      <p className="text-gray-600 mb-2">
         Already have an account?{" "}
         <a href="/Login" className="text-blue-600 hover:underline">
           Login
@@ -51,7 +69,7 @@ export default function SignupForm({ onToggle, isCandidate }) {
       </p>
       <AccountTypeToggle onToggle={onToggle} isCandidate={isCandidate} />
       <form onSubmit={handleFormSubmit}>
-        {/* Full Name and Username Inputs */}
+        {/* First Name and Last Name Inputs */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           {/* First Name InputBox component */}
           <InputBox
@@ -75,50 +93,31 @@ export default function SignupForm({ onToggle, isCandidate }) {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        {/* Password Input with Eye Icon */}
-        <div className="mb-4 relative">
-          {/* Password InputBox component */}
-          <InputBox
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <span className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 cursor-pointer">
-            {/* Eye icon component */}
-            <EyeIcon />
-          </span>
-        </div>
+        {/* Password InputBox */}
+        <PasswordBox
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
         {/* Confirm Password Input with Eye Icon */}
-        <div className="mb-4 relative">
-          {/* Password InputBox component */}
-          <InputBox
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-          <span className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 cursor-pointer">
-            {/* Eye icon Component */}
-            <EyeIcon />
-          </span>
-        </div>
-        {/* Terms of Service Checkbox */}
-        <div className="flex items-center mb-6">
-          <input
-            type="checkbox"
-            id="terms"
-            className="mr-2 rounded text-blue-600 focus:ring-blue-500"
-            checked={termsAccepted}
-            onChange={(e) => setTermsAccepted(e.target.checked)}
-          />
-          <label htmlFor="terms" className="text-sm text-gray-600">
-            I've read and agree with your{" "}
-            <a href="#" className="text-blue-600 hover:underline">
-              Terms of Services
-            </a>
-          </label>
-        </div>
+        <PasswordBox
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+
+        {/* Terms of Service Checkbox component */}
+        <TickBox
+          blackText={"I've read and agree with your"}
+          blueText={"Terms of Services"}
+          href={"/TermsCondition"}
+        />
         {/* Create Account Button */}
-        <ArrowButton text={"Create Account"} type="submit" />
+        <ArrowButton
+          text={"Create Account"}
+          icon={<IoArrowForward size={18} />}
+          type="submit"
+        />
         {/* OR separator */}
         <OR />
 

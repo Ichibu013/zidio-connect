@@ -17,11 +17,7 @@ import java.sql.Timestamp;
  * Corresponds to the 'search_logs' table in the database.
  */
 @Entity
-@Table(name = "search_logs",
-        indexes = {
-                @Index(name = "idx_search_logs_user", columnList = "user_id, searched_at")
-        }
-)
+@Table(name = "search_logs")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

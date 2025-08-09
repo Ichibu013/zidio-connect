@@ -1,15 +1,18 @@
 package com.z_connect.apigateway.dto;
 
-import com.z_connect.common.enums.Role;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class LoginDto {
 
     private String email;
+
     private String password;
-    private Role role;
 
 }

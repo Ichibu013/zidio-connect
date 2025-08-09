@@ -1,6 +1,5 @@
-import axios from "axios";
-import { SIGNUP_URL } from "./utils/Urls";
-import api from "./utils/api";
+import { SIGNUP_URL } from "../utils/Urls";
+import api from "../utils/api";
 
 /**
  * Handles user sign-up by processing form data and making an API call.
@@ -22,19 +21,15 @@ export const signup = async (formData) => {
   console.log("Submitting the following data to the API:", apiPayload);
 
   try {
-    const response = await api.post(
-      "/onboarding/signup",
-      JSON.stringify(apiPayload),
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await api.post(SIGNUP_URL, JSON.stringify(apiPayload), {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     console.log(response);
     return response.status;
   } catch (error) {
-    console.error("Error creating post:", error);
+    console.error("Error Signup post:", error);
     throw error;
   }
 };
