@@ -21,38 +21,38 @@ export default function NavHeader({}) {
     // Array of navigation links
     navLinks = [
       { name: "Home", href: "/" },
-      { name: "Jobs", href: "" },
-      { name: "Dashboard", href: "" },
-      { name: "Analytics", href: "" },
-      { name: "Candidates", href: "" },
-      { name: "Recruiters", href: "" },
+      { name: "Jobs", href: "/admin/job-management" },
+      { name: "Dashboard", href: "/admin/dashboard" },
+      { name: "Analytics", href: "/admin/analytics" },
+      { name: "Candidates", href: "/admin/candidate-management" },
+      { name: "Recruiters", href: "/admin/recruiter-management" },
       { name: "Customer Support", href: "/contact" },
     ];
   } else if (role == "CANDIDATE") {
     navLinks = [
       { name: "Home", href: "/" },
-      { name: "Find Job", href: "" },
-      { name: "Dashboard", href: "" },
-      { name: "Job Alerts", href: "" },
-      { name: "Find Employers", href: "" },
+      { name: "Find Job", href: "/candidate/find-job" },
+      { name: "Dashboard", href: "/candidate/dashboard" },
+      { name: "Job Alerts", href: "/candidate/job-alerts" },
+      { name: "Find Employers", href: "/candidate/find-employers" },
       { name: "Customer Support", href: "/contact" },
     ];
   } else if (role == "RECRUITER") {
     navLinks = [
       { name: "Home", href: "/" },
-      { name: "My Jobs", href: "" },
-      { name: "Dashboard", href: "" },
-      { name: "Applications", href: "" },
-      { name: "Find Candidate", href: "" },
+      { name: "My Jobs", href: "/recruiter/my-jobs" },
+      { name: "Dashboard", href: "/recruiter/dashboard" },
+      { name: "Applications", href: "/recruiter/application" },
+      { name: "Find Candidate", href: "/recruiter/find-candidate" },
       { name: "Customer Support", href: "/contact" },
     ];
   } else {
     navLinks = [
       { name: "Home", href: "/" },
-      { name: "Find Job", href: "" },
-      { name: "Employers", href: "" },
-      { name: "Candidates", href: "" },
-      { name: "Pricing Plans", href: "" },
+      { name: "Find Job", href: "/onboarding/find-job" },
+      { name: "Employers", href: "/onboarding/employers" },
+      { name: "Candidates", href: "/onboarding/candidates" },
+      { name: "Pricing Plans", href: "/onboarding/pricing-plans" },
       { name: "Customer Support", href: "/contact" },
     ];
   }

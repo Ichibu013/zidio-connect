@@ -8,7 +8,7 @@ export default function SignInBtn() {
   const router = useRouter();
   const handleRedirect = () => {
     setIsLoading(true);
-    router.push("/login");
+    router.push("/auth/login");
   };
   return (
     <button

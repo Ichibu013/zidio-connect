@@ -42,7 +42,7 @@ export default function LoginForm() {
       <Heading text={"Sign in"} />
       <p className="text-gray-600 mb-6">
         Don't have account?{" "}
-        <a href="/signup" className="text-blue-600 hover:underline">
+        <a href="/auth/signup" className="text-blue-600 hover:underline">
           Create account
         </a>
       </p>
@@ -66,7 +66,7 @@ export default function LoginForm() {
         <div className="flex justify-between">
           <TickBox blackText={"Remember me"} />
           <a
-            href="/login/forgot-password"
+            href="/auth/forgot-password"
             className="text-sm text-blue-600 hover:underline"
           >
             Forgot password?
