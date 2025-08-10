@@ -2,6 +2,7 @@
 import { useState } from "react";
 import TwoColumnLayout from "@/components/Layout/TwoColumnLayout";
 import SignupForm from "@/components/forms/SignupForm";
+import HeroPanel from "@/components/panels/HeroPanel";
 
 export default function Signup() {
   const [isCandidate, setIsCandidate] = useState(true);
@@ -13,7 +14,7 @@ export default function Signup() {
   return (
     <TwoColumnLayout
       left={<SignupForm onToggle={handleToggle} isCandidate={isCandidate} />}
-      right={null}
+      right={<HeroPanel />}
     />
   );
 }

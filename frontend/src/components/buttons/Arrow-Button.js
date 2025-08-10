@@ -11,7 +11,7 @@ export default function ArrowButton({ text, icon }) {
     <button
       onClick={handleRedirect}
       type="submit"
-      className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-900 hover:scale-101 transition duration-300 ease-in-out flex items-center justify-center shadow-md"
+      className="w-full bg-blue-600 text-white py-3 px-5 rounded-lg font-semibold hover:bg-blue-900 hover:scale-101 transition duration-300 ease-in-out flex items-center justify-center shadow-md"
     >
       {/* Loading Overlay */}
       {isLoading && <SpiningLoadingOverLay />}

@@ -6,7 +6,7 @@ import HeroStatBox from "../misc/HeroStatBox";
 
 export default function HeroPanel() {
   return (
-    <div className="hidden lg:flex lg:w-1/2 bg-white relative items-center justify-center overflow-hidden">
+    <div className="hidden lg:flex lg:w-3/9 bg-white relative items-center justify-center overflow-hidden">
       {/* The background image */}
       <Image
         src={heroImg.src}

@@ -4,12 +4,5 @@ import LoginForm from "@/components/forms/LoginFrom";
 import HeroPanel from "@/components/panels/HeroPanel";
 
 export default function Login() {
-  
-
-  return (
-    <TwoColumnLayout
-      left={<LoginForm />}
-      right={<HeroPanel />}
-    />
-  );
+  return <TwoColumnLayout left={<LoginForm />} right={<HeroPanel />} />;
 }
