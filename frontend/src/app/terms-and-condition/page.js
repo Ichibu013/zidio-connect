@@ -1,5 +1,6 @@
 import PostAJobBtn from "@/components/buttons/HeaderBtn/PostAJobBtn";
 import SignInBtn from "@/components/buttons/HeaderBtn/SignInBtn";
+import FooterWithLinks from "@/components/footer/FooterWithLinks";
 import NavHeader from "@/components/headers/NavHeader/NavHeaderContainer";
 import SearchHeader from "@/components/headers/SearchHeader";
 import SubHeader from "@/components/headers/SubHeader";
@@ -23,6 +24,7 @@ export default function TermsCondition() {
           {/* Terms and Condition component */}
           <TncBox />
         </div>
+        <FooterWithLinks />
       </div>
     </>
   );

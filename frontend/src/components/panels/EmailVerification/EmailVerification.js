@@ -5,6 +5,7 @@ import { IoArrowForward } from "react-icons/io5";
 import PasswordBox from "@/components/inputBox/password-box";
 import ArrowButton from "@/components/buttons/Arrow-Button";
 import BasicHeader from "@/components/headers/BasicHeader";
+import { verifyEmail } from "@/services/auth/verifyEmailService";
 
 const EmailVerification = ({ email }) => {
   const [verificationCode, setVerificationCode] = useState("");
@@ -14,12 +15,15 @@ const EmailVerification = ({ email }) => {
     console.log("Resending verification code...");
   };
 
-  const handleVerification = (e) => {
+  const handleVerification = async (e) => {
     e.preventDefault();
     // Logic to verify the code
     console.log(`Verifying code: ${verificationCode}`);
-    // On success, redirect to the dashboard or another page
-    // router.push('/dashboard');
+    
+    const result = await verifyEmail({ email, otp: verificationCode });
+    if (result == 200) {
+      console.log('Can be redirected!!');
+    }
   };
 
   return (

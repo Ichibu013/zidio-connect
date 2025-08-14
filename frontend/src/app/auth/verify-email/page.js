@@ -17,7 +17,7 @@ export default function VerifyEmailPage() {
       setEmail(emailQuery);
     } else {
       // Handle case where email is not in the URL, e.g., redirect back to signup
-      router.push("/signup");
+      router.push("/auth/signup");
     }
   }, [searchParams, router]);
 

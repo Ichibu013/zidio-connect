@@ -8,6 +8,7 @@ import EamilSubFooterPanel from "@/components/panels/Contact/EmailSub";
 import SignInBtn from "@/components/buttons/HeaderBtn/SignInBtn";
 import PostAJobBtn from "@/components/buttons/HeaderBtn/PostAJobBtn";
 import NavHeader from "@/components/headers/NavHeader/NavHeaderContainer";
+import FooterWithLinks from "@/components/footer/FooterWithLinks";
 
 export default function Contact() {
   return (
@@ -33,8 +34,9 @@ export default function Contact() {
         />
         {/* map panel */}
         <GoogleMap />
-        <footer className="bg-gray-900 text-gray-300 py-12">
+        <footer className="bg-gray-900 text-gray-300 pt-12">
           <EamilSubFooterPanel />
+          <FooterWithLinks />
         </footer>
       </div>
     </div>

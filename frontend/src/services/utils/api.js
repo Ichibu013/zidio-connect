@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 import { BASE_URl } from "./Urls";
 
 const api = axios.create({
@@ -13,21 +14,23 @@ const api = axios.create({
 // Response interceptor to handle token expiration
 api.interceptors.response.use(
   (response) => {
-    // Adding token and role to browser storage
-    localStorage.setItem("jwt_token", response.data.data.token);
-    localStorage.setItem("role", response.data.data.role)
-    console.log("Added jwt_token and Role to Local Storage");
+    // Adding token and role to browser cookies
+    // Cookies are accessible to middleware on server
+    Cookies.set("jwt_token", response.data.data.token, { expires: 7 }); // Expires in 7 days
+    Cookies.set("role", response.data.data.role, { expires: 7 });
+    console.log("Added jwt_token and Role to Cookies");
     return response;
   },
   (error) => {
     const status = error.response ? error.response.status : null;
     if (status == 401) {
-      //Clear Token and Redirect to login
-      localStorage.removeItem("jwt_token");
+      // Clear Cookies and redirect to login
+      Cookies.remove("jwt_token");
+      Cookies.remove("role");
       console.log(
         "Remove token from local storage .. redirecting to login page"
       );
-      window.location.href = "/Login";
+      window.location.href = "/auth/login";
     }
     return Promise.reject(error);
   }
@@ -37,7 +40,7 @@ api.interceptors.response.use(
 api.interceptors.request.use(
   (config) => {
     // If token present add to header as Bearer token
-    const token = localStorage.getItem("jwt_token")
+    const token = Cookies.get("jwt_token");
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
