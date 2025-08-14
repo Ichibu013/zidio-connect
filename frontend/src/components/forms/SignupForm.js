@@ -51,7 +51,7 @@ export default function SignupForm({ onToggle, isCandidate }) {
     const result = 200;
 
     if (result == 200) {
-      router.push(`/verify-email?email=${email}`);
+      router.push(`/auth/verify-email?email=${email}`);
     }
   };
 
@@ -63,7 +63,7 @@ export default function SignupForm({ onToggle, isCandidate }) {
       <Heading text={"Create Account"} />
       <p className="text-gray-600 mb-2">
         Already have an account?{" "}
-        <a href="/Login" className="text-blue-600 hover:underline">
+        <a href="/auth/login" className="text-blue-600 hover:underline">
           Login
         </a>
       </p>
@@ -110,7 +110,9 @@ export default function SignupForm({ onToggle, isCandidate }) {
         <TickBox
           blackText={"I've read and agree with your"}
           blueText={"Terms of Services"}
-          href={"/TermsCondition"}
+          href={"/terms-and-condition"}
+          onClick={() => setTermsAccepted(!termsAccepted)}
+          state={termsAccepted}
         />
         {/* Create Account Button */}
         <ArrowButton

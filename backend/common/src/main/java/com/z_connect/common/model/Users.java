@@ -12,10 +12,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
- * Represents a user in the application.
- * Corresponds to the 'users' table in the database.
+ * Entity class representing a user in the application.
+ * This class is mapped to the 'users' table in the database.
  */
 @Entity
 @Table(name = "users")
@@ -94,13 +95,19 @@ public class Users {
     @Column(name = "t_n_c_accpeted")
     private boolean tncAccepted;
 
+    @Column(name = "is_verified")
+    private Boolean isVerified = false;
+
+    @Column(name = "generated_otp", nullable = false, length = 6, unique = true, updatable = false)
+    private Long generatedOtp;
+
     /**
      * The timestamp when the user record was created.
      * This is automatically set by the database.
      */
     @Column(name = "created_at", updatable = false)
     @CreationTimestamp
-    private Timestamp createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     /**
      * The timestamp when the user record was last updated.
@@ -109,6 +116,10 @@ public class Users {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private Timestamp updatedAt;
+
+    @Column(name = "is_logged_in")
+    private boolean isLoggedIn;
+
 }
 
 

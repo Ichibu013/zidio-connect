@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/v1/auth")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -23,7 +25,7 @@ public class OnboardingController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<GenericResponse<String>> signup(@Valid @RequestBody SignupDto signupDto) {
+    public ResponseEntity<GenericResponse<Map<String,String>>> signup(@Valid @RequestBody SignupDto signupDto) {
         return ResponseEntity.ok(onboardingService.signup(signupDto));
     }
 
@@ -32,4 +34,13 @@ public class OnboardingController {
         return ResponseEntity.ok(onboardingService.authenticate(loginDto));
     }
 
+    @PatchMapping("/verify-email/{email}")
+    public ResponseEntity<GenericResponse<Map<String,String>>> verifyEmail(@PathVariable(value = "email") String email,@RequestBody Long otp) {
+        return ResponseEntity.ok(onboardingService.verifyEmail(otp, email));
+    }
+
+    @PatchMapping("/resend-otp/{email}")
+    public ResponseEntity<GenericResponse<Map<String,String>>> resendOtp(@PathVariable(value = "email") String email) {
+        return ResponseEntity.ok(onboardingService.resendOtp(email));
+    }
 }

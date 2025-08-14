@@ -45,7 +45,7 @@ export default function LocationDropdown() {
         className="flex items-center p-3 text-gray-700 border-r border-gray-200 flex-grow hover:bg-gray-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-200"
       >
         <span className="text-xl mr-2">{selectedCountry.flag}</span>
-        <span className="font-semibold text-sm">{selectedCountry.name}</span>
+        <span className="font-semibold text-sm ">{selectedCountry.name}</span>
         <IoIosArrowDown className="text-gray-300 pl-1" size={23} />
       </button>
 
@@ -56,7 +56,7 @@ export default function LocationDropdown() {
             <div
               key={index}
               onClick={() => handleSelectCountry(country)}
-              className="flex items-center p-3 hover:bg-gray-100 cursor-pointer transition-colors duration-200"
+              className="flex items-center p-3 hover:bg-gray-100 cursor-pointer transition-colors duration-200 text-black"
             >
               <span className="text-xl mr-2">{country.flag}</span>
               <span className="font-semibold text-sm">{country.name}</span>

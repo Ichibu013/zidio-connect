@@ -1,7 +1,6 @@
 import ArrowButton from "../buttons/Arrow-Button";
 import SocialButtons from "../buttons/Social-Buttons";
 import Heading from "../misc/Heading";
-import EyeIcon from "../icons/Eye-Icon";
 import InputBox from "../inputBox/input-box";
 import OR from "../misc/Or-seperator";
 import { useState } from "react";
@@ -43,7 +42,7 @@ export default function LoginForm() {
       <Heading text={"Sign in"} />
       <p className="text-gray-600 mb-6">
         Don't have account?{" "}
-        <a href="/Signup" className="text-blue-600 hover:underline">
+        <a href="/auth/signup" className="text-blue-600 hover:underline">
           Create account
         </a>
       </p>
@@ -67,7 +66,7 @@ export default function LoginForm() {
         <div className="flex justify-between">
           <TickBox blackText={"Remember me"} />
           <a
-            href="/Login/ForgotPassword"
+            href="/auth/forgot-password"
             className="text-sm text-blue-600 hover:underline"
           >
             Forgot password?

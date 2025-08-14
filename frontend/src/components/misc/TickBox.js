@@ -1,8 +1,14 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-export default function TickBox({ blackText, blueText, href }) {
-  const [termsAccepted, setTermsAccepted] = useState(false);
+export default function TickBox({
+  blackText,
+  blueText,
+  href,
+  onClick,
+  state: termsAccepted,
+}) {
+
 
   // Define the animation variants for the checkbox and the checkmark
   const checkboxVariants = {
@@ -40,7 +46,7 @@ export default function TickBox({ blackText, blueText, href }) {
         variants={checkboxVariants}
         animate={termsAccepted ? "checked" : "unchecked"}
         initial={false}
-        onClick={() => setTermsAccepted(!termsAccepted)}
+        onClick={onClick}
         className="w-4 h-4 flex items-center justify-center rounded border cursor-pointer"
       >
         <motion.svg

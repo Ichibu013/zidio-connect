@@ -139,7 +139,7 @@ export default function TncBox() {
 
       {/* Right column for the table of contents */}
       <div className="md:w-1/4">
-        <div className="sticky top-8">
+        <div className="sticky top-16">
           <h3 className="uppercase text-sm tracking-wide font-bold text-gray-400 mb-4">
             TABLE OF CONTENTS
           </h3>
