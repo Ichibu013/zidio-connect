@@ -26,4 +26,5 @@ public class SignupDto {
 
     private boolean tncAccepted;
 
+    private Long optCode;
 }

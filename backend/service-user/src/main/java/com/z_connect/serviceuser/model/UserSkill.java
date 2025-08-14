@@ -14,8 +14,10 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.sql.Timestamp;
 
 /**
- * Represents a users's skill and proficiency level.
- * This entity has a composite primary key.
+ * Represents the association between a user and a skill, including additional metadata.
+ * Maps to the `user_skills` table in the database.
+ * This entity uses a composite primary key represented by {@link UserSkillId}.
+ * It also maintains relationships to the {@link Users} and {@link Skill} entities.
  */
 @Entity
 @Table(name = "user_skills")

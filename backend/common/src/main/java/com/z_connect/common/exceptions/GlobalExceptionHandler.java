@@ -87,6 +87,45 @@ public class GlobalExceptionHandler extends RuntimeException {
                 );
     }
 
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<GenericResponse<Map<String, String>>> handleUserNotFoundException(UserNotFoundException ex) {
+        log.error("UserNotFoundException: {}", ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(genericResponseFactory
+                        .errorResponse(
+                                getErrorDetails(ex),
+                                "error.user.not.found"
+                        )
+                );
+    }
+
+    @ExceptionHandler(VerifyEmailFailedException.class)
+    public ResponseEntity<GenericResponse<Map<String, String>>> handleVerifyEmailFailedException(VerifyEmailFailedException ex) {
+        log.error("VerifyEmailFailedException: {}", ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.NOT_ACCEPTABLE)
+                .body(genericResponseFactory
+                        .errorResponse(
+                                getErrorDetails(ex),
+                                "error.verify.email.failed"
+                        )
+                );
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<GenericResponse<Map<String, String>>> handleException(Exception ex) {
+        log.error("Exception: {}", ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(genericResponseFactory
+                        .errorResponse(
+                                getErrorDetails(ex),
+                                "error.internal.server.error"
+                        )
+                );
+    }
+
     /**
      * Extracts error details from the provided exception by recursively traversing
      * the exception cause chain and returning a map containing an error message.

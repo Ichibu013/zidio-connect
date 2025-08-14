@@ -19,6 +19,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,8 +29,10 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,6 +40,7 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class OnboardingServiceTest {
 
     @Mock
@@ -62,17 +67,22 @@ class OnboardingServiceTest {
     @Mock
     private com.z_connect.common.utils.jwt.JwtUtil jwtUtil;
 
+    @Mock
+    private com.z_connect.common.service.EmailService emailService;
+
     @InjectMocks
     private OnboardingService onboardingService;
 
     private SignupDto signupDto;
     private LoginDto loginDto;
     private Users user;
-    private GenericResponse<String> genericResponse;
+    private GenericResponse genericResponse;
     private GenericResponse<AuthResponse> loginResponse;
 
     @BeforeEach
     void setUp() {
+        // Stub email sending to avoid external dependency
+        doNothing().when(emailService).sendOTPEmail(anyString(), anyString());
         // Initialize test data
         signupDto = SignupDto.builder()
                 .firstName("John")
@@ -95,6 +105,7 @@ class OnboardingServiceTest {
         user.setEmail("john.doe@example.com");
         user.setPhoneNumber("12345678901");
         user.setPassword("encodedPassword");
+        user.setGeneratedOtp(123456L);
 
         genericResponse = new GenericResponse<>();
         loginResponse = new GenericResponse<>();
@@ -107,7 +118,7 @@ class OnboardingServiceTest {
         when(userValidator.isValidSignupDto(any(SignupDto.class))).thenReturn(true);
         when(userValidator.populateUserFromDto(any(SignupDto.class))).thenReturn(user);
         when(userRepository.save(any(Users.class))).thenReturn(user);
-        when(responseFactory.successResponse(anyString(), anyString())).thenReturn(genericResponse);
+        when(responseFactory.successResponse(anyMap(), eq("success.signup"))).thenReturn(genericResponse);
 
         // Act
         GenericResponse<?> result = onboardingService.signup(signupDto);
@@ -118,7 +129,7 @@ class OnboardingServiceTest {
         verify(userValidator).isValidSignupDto(signupDto);
         verify(userValidator).populateUserFromDto(signupDto);
         verify(userRepository).save(user);
-        verify(responseFactory).successResponse(eq("Registered Successfully."), eq("success.signup"));
+        verify(responseFactory).successResponse(anyMap(), eq("success.signup"));
     }
 
     @Test
@@ -146,7 +157,7 @@ class OnboardingServiceTest {
         when(userValidator.isValidSignupDto(any(SignupDto.class))).thenReturn(true);
         when(userValidator.populateUserFromDto(any(SignupDto.class))).thenReturn(user);
         when(userRepository.save(any(Users.class))).thenReturn(user);
-        when(responseFactory.successResponse(anyString(), anyString())).thenReturn(genericResponse);
+        when(responseFactory.successResponse(anyMap(), eq("success.signup"))).thenReturn(genericResponse);
 
         // Act
         GenericResponse<?> result = onboardingService.signup(signupDto);
@@ -166,7 +177,7 @@ class OnboardingServiceTest {
         when(userValidator.isValidSignupDto(any(SignupDto.class))).thenReturn(false);
         when(userValidator.populateUserFromDto(any(SignupDto.class))).thenReturn(user);
         when(userRepository.save(any(Users.class))).thenReturn(user);
-        when(responseFactory.successResponse(anyString(), anyString())).thenReturn(genericResponse);
+        when(responseFactory.successResponse(anyMap(), eq("success.signup"))).thenReturn(genericResponse);
 
         // Act
         GenericResponse<?> result = onboardingService.signup(signupDto);
@@ -217,6 +228,9 @@ class OnboardingServiceTest {
         // Mock JWT generation
         when(jwtUtil.generateToken(userDetails)).thenReturn("token123");
 
+        // Mock repository interaction for login status
+        when(userRepository.findByEmail(loginDto.getEmail())).thenReturn(Optional.of(user));
+
         // Prepare response from factory and capture AuthResponse passed in
         ArgumentCaptor<AuthResponse> authResponseCaptor = ArgumentCaptor.forClass(AuthResponse.class);
         when(responseFactory.successResponse(any(AuthResponse.class), eq("success.login")))
@@ -231,6 +245,11 @@ class OnboardingServiceTest {
         verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
         verify(userDetailsService).loadUserByUsername(loginDto.getEmail());
         verify(jwtUtil).generateToken(userDetails);
+        verify(userRepository).findByEmail(loginDto.getEmail());
+        // verify user is marked as logged in and saved
+        ArgumentCaptor<Users> savedUserCaptor = ArgumentCaptor.forClass(Users.class);
+        verify(userRepository).save(savedUserCaptor.capture());
+        assertTrue(savedUserCaptor.getValue().isLoggedIn());
         verify(responseFactory).successResponse(authResponseCaptor.capture(), eq("success.login"));
 
         AuthResponse captured = authResponseCaptor.getValue();
@@ -253,6 +272,7 @@ class OnboardingServiceTest {
         verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
         verifyNoInteractions(userDetailsService);
         verifyNoInteractions(jwtUtil);
+        verifyNoInteractions(userRepository);
         verify(responseFactory, never()).successResponse(any(AuthResponse.class), anyString());
     }
     
@@ -269,6 +289,7 @@ class OnboardingServiceTest {
         userWithoutRoleAndTimestamp.setPhoneNumber("12345678901");
         userWithoutRoleAndTimestamp.setPassword("password123");
         userWithoutRoleAndTimestamp.setRole(Role.CANDIDATE);
+        userWithoutRoleAndTimestamp.setGeneratedOtp(123456L);
         
         // Don't set the timestamp here, let the service set it
         // userWithoutRoleAndTimestamp.setCreatedAt(new Timestamp(System.currentTimeMillis()));
@@ -287,11 +308,11 @@ class OnboardingServiceTest {
             Users savedUser = invocation.getArgument(0);
             // If timestamp is not set, set it here to simulate what the service might do
             if (savedUser.getCreatedAt() == null) {
-                savedUser.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+                savedUser.setCreatedAt(LocalDateTime.now());
             }
             return savedUser;
         });
-        when(responseFactory.successResponse(anyString(), anyString())).thenReturn(genericResponse);
+        when(responseFactory.successResponse(anyMap(), anyString())).thenReturn(genericResponse);
         
         // Act
         GenericResponse<?> result = onboardingService.signup(signupDto);
@@ -311,7 +332,7 @@ class OnboardingServiceTest {
         
         // Verify timestamp is within the expected range
         assertNotNull(capturedUser.getCreatedAt());
-        long timestamp = capturedUser.getCreatedAt().getTime();
+        long timestamp = capturedUser.getCreatedAt().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         assertTrue(timestamp >= beforeCreation && timestamp <= afterCreation,
                 "Timestamp " + timestamp + " should be between " + beforeCreation + " and " + afterCreation);
     }

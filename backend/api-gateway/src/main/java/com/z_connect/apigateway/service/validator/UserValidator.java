@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 @Slf4j
@@ -74,7 +75,8 @@ public class UserValidator {
         Users user = mapper.map(signupDto, Users.class);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(signupDto.getRole());
-        user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+        user.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        user.setGeneratedOtp(generateOtp());
         return user;
     }
 
@@ -93,5 +95,11 @@ public class UserValidator {
         }
         
         return false;
+    }
+
+    //Generating a random OTP
+    public Long generateOtp(){
+        Random random = new Random();
+        return (long) (100000+random.nextInt(999999));
     }
 }
