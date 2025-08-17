@@ -1,11 +1,13 @@
 package com.z_connect.common.utils.jwt;
 
 import com.z_connect.common.exceptions.AuthenticationException;
+import com.z_connect.common.repository.IJwtTokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -18,15 +20,18 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
+    @Autowired
+    private IJwtTokenRepository jwtTokenRepository;
+
     private static final String secretKey = "yoZW5jb2RlZCBieSBzZWN1cml0eS1taW5kZWQgYmFzZTY0LWVuY29kZXI";
-    private static final long jwtExpirationMs = 3600000 ;
+    private static final long jwtExpirationMs = 3600000;
 
 
-    public String extractEmail(String token){
+    public String extractEmail(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
@@ -53,9 +58,13 @@ public class JwtUtil {
     }
 
     public String generateToken(UserDetails userDetails) {
+        String token;
         HashMap<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("role", userDetails.getAuthorities());
-        return generateToken(extraClaims, userDetails);
+        do {
+            token = generateToken(extraClaims, userDetails);
+        } while (jwtTokenRepository.existsByToken(token));
+        return token;
     }
 
     private String generateToken(HashMap<String, Object> extraClaims, UserDetails userDetails) {
@@ -68,7 +77,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    public boolean isTokenValid(String token, UserDetails userDetails){
+    public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractEmail(token);
         return (username != null && username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }

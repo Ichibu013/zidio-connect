@@ -23,8 +23,6 @@ services:
       start_period: 40s
       interval: 10s
 
-
-
   api-gateway:
     build:
       context: .
@@ -41,6 +39,8 @@ services:
       - SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT=20000
       - SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE=5
       - SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE=20
+      - EMAIL_USERNAME=noreply.e.veda@gmail.com
+      - EMAIL_PASSWORD=uygd nltv pbek bomc
     command: ["java", "-jar", "/app/api-gateway.jar"]
     depends_on:
       - mysqldb

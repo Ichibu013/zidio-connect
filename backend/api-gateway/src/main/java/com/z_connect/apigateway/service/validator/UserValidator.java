@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -75,7 +75,7 @@ public class UserValidator {
         Users user = mapper.map(signupDto, Users.class);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(signupDto.getRole());
-        user.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        user.setUpdatedAt(LocalDateTime.now());
         user.setGeneratedOtp(generateOtp());
         return user;
     }
@@ -100,6 +100,6 @@ public class UserValidator {
     //Generating a random OTP
     public Long generateOtp(){
         Random random = new Random();
-        return (long) (100000+random.nextInt(999999));
+        return (long) (100000+random.nextInt(900000));
     }
 }

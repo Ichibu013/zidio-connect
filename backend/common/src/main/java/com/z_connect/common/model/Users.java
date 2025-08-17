@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
@@ -54,6 +53,7 @@ public class Users {
      * This field is unique across all users.
      */
     @Column(name = "email", unique = true)
+    @NotNull
     @Email
     private String email;
 
@@ -92,13 +92,13 @@ public class Users {
     private Company company;
 
 
-    @Column(name = "t_n_c_accpeted")
+    @Column(name = "t_n_c_accpeted", nullable = false, columnDefinition = "boolean")
     private boolean tncAccepted;
 
-    @Column(name = "is_verified")
+    @Column(name = "is_verified", nullable = false, columnDefinition = "boolean default false")
     private Boolean isVerified = false;
 
-    @Column(name = "generated_otp", nullable = false, length = 6, unique = true, updatable = false)
+    @Column(name = "generated_otp", nullable = false, length = 6, unique = true)
     private Long generatedOtp;
 
     /**
@@ -115,9 +115,9 @@ public class Users {
      */
     @Column(name = "updated_at")
     @UpdateTimestamp
-    private Timestamp updatedAt;
+    private LocalDateTime updatedAt;
 
-    @Column(name = "is_logged_in")
+    @Column(name = "is_logged_in", nullable = false, columnDefinition = "boolean default false")
     private boolean isLoggedIn;
 
 }
