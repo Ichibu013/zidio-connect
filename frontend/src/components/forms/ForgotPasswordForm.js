@@ -1,3 +1,5 @@
+'use client';
+import React, { useState } from "react";  
 import Heading from "../misc/Heading";
 import InputBox from "../inputBox/input-box";
 import ArrowButton from "../buttons/Arrow-Button";
@@ -5,8 +7,28 @@ import OR from "../misc/Or-seperator";
 import SocialButtons from "../buttons/Social-Buttons";
 import BasicHeader from "../headers/BasicHeader";
 import { IoArrowForward } from "react-icons/io5";
+import { forgotPassword } from "@/services/auth/forgotPasswordService";
 
-export default function ForgotPasswordForm({ onSubmit }) {
+export default function ForgotPasswordForm() {
+
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    
+    // Handle the form submission logic here
+    console.log("Email submitted:", email);
+    
+    const result = await forgotPassword(email);
+    if (result === 200) {
+      alert("Password reset link sent to your email");
+      setEmail("");
+      window.location.href = "/auth/login"; 
+    } else {
+      alert("Error sending password reset link");
+    }
+  };
+
   return (
     // Form card
     <div className="bg-white p-6 sm:p-8 rounded-lg w-full max-w-lg">
@@ -26,10 +48,14 @@ export default function ForgotPasswordForm({ onSubmit }) {
         </a>
       </p>
 
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className="mb-4">
           {/* Email InputBox component */}
-          <InputBox placeholder={"Email Address"} />
+          <InputBox
+            placeholder={"Email Address"}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
 
         {/* Reset Password Button */}

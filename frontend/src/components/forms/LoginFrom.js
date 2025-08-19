@@ -27,9 +27,37 @@ export default function LoginForm() {
     const result = await login(formData);
 
     if (result == 200) {
-      console.log("Can be redirected!!");
+      alert("Login successful");
+
+      // Redirect to the dashboard or home page
+      window.location.href = "/"; 
     }
     if (result == 500) {
+      alert("Login failed, please check your credentials");
+      console.error("Login failed, please check your credentials");
+    }
+    if (result == 400) {
+      alert("Bad Request, please check your input");
+      console.error("Bad Request, please check your input");
+    }
+    if (result == 401) {
+      alert("Unauthorized, please check your credentials");
+      console.error("Unauthorized, please check your credentials");
+    }
+    if (result == 403) {
+      alert("Forbidden, you do not have permission to access this resource");
+      console.error("Forbidden, you do not have permission to access this resource");
+    }
+    if (result == 404) {
+      alert("Not Found, please check the URL");
+      console.error("Not Found, please check the URL");
+    }
+    if (result == 429) {
+      alert("Too Many Requests, please try again later");
+      console.error("Too Many Requests, please try again later");
+    }
+    if (result == 500) {
+      alert("Internal Server Error, please try again later"); 
       console.error("Backend Server error");
     }
   };

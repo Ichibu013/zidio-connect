@@ -6,24 +6,42 @@ import PasswordBox from "@/components/inputBox/password-box";
 import ArrowButton from "@/components/buttons/Arrow-Button";
 import BasicHeader from "@/components/headers/BasicHeader";
 import { verifyEmail } from "@/services/auth/verifyEmailService";
+import { resendOtp } from "@/services/auth/resendOtpService";
 
 const EmailVerification = ({ email }) => {
   const [verificationCode, setVerificationCode] = useState("");
 
-  const handleResend = () => {
+  const handleResend = async (params) => {
+    params.preventDefault(); // Prevent default form submission behavior
     // Logic to resend the verification code
     console.log("Resending verification code...");
+
+    const result = await resendOtp(email);
+    if (result === 200) {
+      alert("Verification code resent successfully");
+    } else {
+      alert("Error resending verification code");
+    }
+    console.log("Verification code resent");
+    setVerificationCode(""); // Clear the input field after resending
   };
 
   const handleVerification = async (e) => {
     e.preventDefault();
     // Logic to verify the code
     console.log(`Verifying code: ${verificationCode}`);
-    
+
     const result = await verifyEmail({ email, otp: verificationCode });
     if (result == 200) {
-      console.log('Can be redirected!!');
-    }
+      alert("Email verified successfully");
+      // Redirect to a success page or dashboard
+      window.location.href = "/auth/login"; 
+    } else {
+      alert("Error verifying email");
+      // Handle error, e.g., show an error message
+      console.error("Error verifying email:", result);
+      setVerificationCode(""); // Clear the input field on error
+    } 
   };
 
   return (

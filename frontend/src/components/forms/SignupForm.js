@@ -47,11 +47,39 @@ export default function SignupForm({ onToggle, isCandidate }) {
       termsAccepted,
     };
 
-    // const result = await signup(formData);
-    const result = 200;
+    const result = await signup(formData);
+    // const result = 200;
 
     if (result == 200) {
+      alert("Signup successful");
+      // Redirect to the email verification page with the email as a query parameter
       router.push(`/auth/verify-email?email=${email}`);
+    }
+    if (result == 500) {
+      alert("Signup failed, please check your input");
+      console.error("Signup failed, please check your input");
+    }
+    if (result == 400) {
+      alert("Bad Request, please check your input");
+      console.error("Bad Request, please check your input");
+    }
+    if (result == 401) {
+      alert("Unauthorized, please check your credentials");
+      console.error("Unauthorized, please check your credentials");
+    }
+    if (result == 403) {
+      alert("Forbidden, you do not have permission to access this resource");
+      console.error(
+        "Forbidden, you do not have permission to access this resource"
+      );
+    }
+    if (result == 404) {
+      alert("Not Found, please check the URL");
+      console.error("Not Found, please check the URL");
+    }
+    if (result == 429) {
+      alert("Too Many Requests, please try again later");
+      console.error("Too Many Requests, please try again later");
     }
   };
 

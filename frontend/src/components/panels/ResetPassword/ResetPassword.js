@@ -1,16 +1,40 @@
-'use client'
+"use client";
 import ArrowButton from "@/components/buttons/Arrow-Button";
 import PasswordBox from "@/components/inputBox/password-box";
+import { resetPassword } from "@/services/auth/resetPasswordService";
 import React, { useState } from "react";
 import { IoArrowForward } from "react-icons/io5";
 
-export default function ResetPassword({token}) {
+export default function ResetPassword({ token }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-    const hanldeSubmit = async (token) => {
-      console.log(token);
-      
+  const hanldeSubmit = async (event) => {
+    // Prevent default form submission behavior
+    event.preventDefault();
+    console.log(token);
+    // Validate passwords
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    const formData = {
+      password: password,
+      token: token,
+    };
+
+    const result = await resetPassword(formData);
+    if (result == 200) {
+      alert("Password reset successfully");
+      // Optionally, redirect the user or clear the form
+      setPassword("");
+      setConfirmPassword("");
+      // Redirect to login or another page
+      window.location.href = "/auth/login"; 
+    } else {
+      alert("Error resetting password");
+    }
   };
   return (
     <div className="flex min-w-md bg-white ">
@@ -19,7 +43,7 @@ export default function ResetPassword({token}) {
           Reset Password
         </h2>
         <p className="mb-6 text-center text-sm text-gray-400">
-          Please enter your 
+          Please enter your
           <span className="font-semibold text-black"> new password</span>
         </p>
         <form onSubmit={hanldeSubmit}>
