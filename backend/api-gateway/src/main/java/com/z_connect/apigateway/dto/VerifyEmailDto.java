@@ -1,5 +1,6 @@
 package com.z_connect.apigateway.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,14 +8,11 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class LoginDto {
+@NoArgsConstructor
+@NotNull(message = "Otp cannot be null")
+public class VerifyEmailDto {
 
-    private String email;
-
-    private String password;
-
-    private boolean rememberMe;
+    private Long Otp;
 
 }

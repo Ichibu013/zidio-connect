@@ -25,7 +25,7 @@ export default function TwoColumnLayout({ left, right }) {
 
   return (
     // Main container: full screen height, flex column for mobile, row for larger screens
-    <div className="flex flex-col lg:flex-row lg:h-screen bg-gray-100 font-inter bg-white">
+    <div className="flex flex-col lg:flex-row lg:h-screen font-inter bg-white">
       {/* Left Side */}
       <div className="flex items-center justify-center w-full lg:w-5/9 p-4 sm:p-8 h-full">
         {isLoadingLeft ? (

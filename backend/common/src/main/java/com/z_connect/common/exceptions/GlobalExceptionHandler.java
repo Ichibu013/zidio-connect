@@ -113,6 +113,58 @@ public class GlobalExceptionHandler extends RuntimeException {
                 );
     }
 
+    @ExceptionHandler(EmailNotSendException.class)
+    public ResponseEntity<GenericResponse<Map<String, String>>> handleEmailNotSendException(EmailNotSendException ex) {
+        log.error("EmailNotSendException: {}", ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(genericResponseFactory
+                        .errorResponse(
+                                getErrorDetails(ex),
+                                "error.email.not.send"
+                        )
+                );
+    }
+
+    @ExceptionHandler(PassTokenInvalidException.class)
+    public ResponseEntity<GenericResponse<Map<String, String>>> handlePassTokenInvalidException(PassTokenInvalidException ex) {
+        log.error("PassTokenInvalidException: {}", ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(genericResponseFactory
+                        .errorResponse(
+                                getErrorDetails(ex),
+                                "error.pass.token.invalid"
+                        )
+                );
+    }
+
+    @ExceptionHandler(JwtSavingException.class)
+    public ResponseEntity<GenericResponse<Map<String, String>>> handleJwtSavingException(JwtSavingException ex) {
+        log.error("JwtSavingException: {}", ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(genericResponseFactory
+                        .errorResponse(
+                                getErrorDetails(ex),
+                                "error.jwt.saving"
+                        )
+                );
+    }
+
+    @ExceptionHandler(JwtTokenNotFoundException.class)
+    public ResponseEntity<GenericResponse<Map<String, String>>> handleJwtTokenNotFoundException(JwtTokenNotFoundException ex) {
+        log.error("JwtTokenNotFoundException: {}", ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(genericResponseFactory
+                        .errorResponse(
+                                getErrorDetails(ex),
+                                "error.jwt.token.not.found"
+                        )
+                );
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<GenericResponse<Map<String, String>>> handleException(Exception ex) {
         log.error("Exception: {}", ex.getMessage());

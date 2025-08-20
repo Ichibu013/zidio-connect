@@ -3,11 +3,16 @@ package com.z_connect.apigateway.service.impl;
 import com.z_connect.apigateway.dto.AuthResponse;
 import com.z_connect.apigateway.dto.LoginDto;
 import com.z_connect.apigateway.dto.SignupDto;
+import com.z_connect.apigateway.dto.VerifyEmailDto;
 import com.z_connect.apigateway.service.validator.UserValidator;
 import com.z_connect.common.enums.Role;
+import com.z_connect.common.exceptions.JwtTokenNotFoundException;
 import com.z_connect.common.exceptions.RegistrationFailedException;
 import com.z_connect.common.exceptions.UserExistsException;
+import com.z_connect.common.exceptions.VerifyEmailFailedException;
+import com.z_connect.common.model.JwtToken;
 import com.z_connect.common.model.Users;
+import com.z_connect.common.repository.IJwtTokenRepository;
 import com.z_connect.common.repository.IUserRepository;
 import com.z_connect.common.utils.mapping.GenericDtoMapper;
 import com.z_connect.common.utils.response.GenericResponse;
@@ -25,6 +30,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -45,6 +52,9 @@ class OnboardingServiceTest {
 
     @Mock
     private IUserRepository userRepository;
+
+    @Mock
+    private IJwtTokenRepository jwtTokenRepository;
 
     @Mock
     private PasswordEncoder passwordEncoder;
@@ -106,6 +116,8 @@ class OnboardingServiceTest {
         user.setPhoneNumber("12345678901");
         user.setPassword("encodedPassword");
         user.setGeneratedOtp(123456L);
+        user.setCreatedAt(LocalDateTime.now());
+        user.setUpdatedAt(LocalDateTime.now());
 
         genericResponse = new GenericResponse<>();
         loginResponse = new GenericResponse<>();
@@ -335,5 +347,120 @@ class OnboardingServiceTest {
         long timestamp = capturedUser.getCreatedAt().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         assertTrue(timestamp >= beforeCreation && timestamp <= afterCreation,
                 "Timestamp " + timestamp + " should be between " + beforeCreation + " and " + afterCreation);
+    }
+
+    @Test
+    void verifyEmail_Success() {
+        // Arrange
+        String email = user.getEmail();
+        user.setCreatedAt(LocalDateTime.now().minusMinutes(1));
+        user.setGeneratedOtp(654321L);
+        VerifyEmailDto dto = VerifyEmailDto.builder().Otp(654321L).build();
+
+        when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
+        when(responseFactory.successResponse(anyMap(), eq("success.verifyEmail"))).thenReturn(genericResponse);
+
+        // Act
+        GenericResponse<?> response = onboardingService.verifyEmail(dto, email);
+
+        // Assert
+        assertNotNull(response);
+        verify(userRepository).save(any(Users.class));
+        verify(responseFactory).successResponse(anyMap(), eq("success.verifyEmail"));
+    }
+
+    @Test
+    void verifyEmail_InvalidOtp_Throws() {
+        // Arrange
+        String email = user.getEmail();
+        user.setCreatedAt(LocalDateTime.now().minusMinutes(1));
+        user.setGeneratedOtp(111111L);
+        VerifyEmailDto dto = VerifyEmailDto.builder().Otp(222222L).build();
+
+        when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
+
+        // Act & Assert
+        assertThrows(VerifyEmailFailedException.class, () -> onboardingService.verifyEmail(dto, email));
+        verify(userRepository, never()).save(any());
+    }
+
+    @Test
+    void resendOtp_WithinGracePeriod_Throws() {
+        // Arrange
+        String email = user.getEmail();
+        user.setUpdatedAt(LocalDateTime.now());
+        when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
+
+        // Act & Assert
+        assertThrows(VerifyEmailFailedException.class, () -> onboardingService.resendOtp(email));
+        verify(emailService, never()).sendOTPEmail(anyString(), anyString());
+    }
+
+    @Test
+    void resendOtp_Success_SendsEmailAndSaves() {
+        // Arrange
+        String email = user.getEmail();
+        user.setUpdatedAt(LocalDateTime.now().minusMinutes(3));
+        when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
+        when(responseFactory.successResponse(anyMap(), eq("success.resendOtp"))).thenReturn(genericResponse);
+
+        // Act
+        GenericResponse<?> response = onboardingService.resendOtp(email);
+
+        // Assert
+        assertNotNull(response);
+        verify(emailService).sendOTPEmail(eq(email), anyString());
+        verify(userRepository).save(any(Users.class));
+        verify(responseFactory).successResponse(anyMap(), eq("success.resendOtp"));
+    }
+
+    @Test
+    void logout_Success_DeactivatesToken() {
+        // Arrange
+        String email = user.getEmail();
+        // Mock security context
+        SecurityContext securityContext = mock(SecurityContext.class);
+        org.springframework.security.core.Authentication authentication = mock(org.springframework.security.core.Authentication.class);
+        when(authentication.getName()).thenReturn(email);
+        when(authentication.getCredentials()).thenReturn("cred");
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+
+        JwtToken token = new JwtToken();
+        token.setUserId(user);
+        token.setIsActive(true);
+
+        when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
+        when(jwtTokenRepository.findByUserIdAndIsActive(user,true)).thenReturn(Optional.of(token));
+        when(responseFactory.successResponse(anyMap(), eq("success.logout"))).thenReturn(genericResponse);
+
+        // Act
+        GenericResponse<?> response = onboardingService.logout();
+
+        // Assert
+        assertNotNull(response);
+        verify(userRepository).save(any(Users.class));
+        ArgumentCaptor<JwtToken> tokenCaptor = ArgumentCaptor.forClass(JwtToken.class);
+        verify(jwtTokenRepository).save(tokenCaptor.capture());
+        assertFalse(Boolean.TRUE.equals(tokenCaptor.getValue().getIsActive()));
+        verify(responseFactory).successResponse(anyMap(), eq("success.logout"));
+    }
+
+    @Test
+    void logout_TokenNotFound_Throws() {
+        // Arrange
+        String email = user.getEmail();
+        SecurityContext securityContext = mock(SecurityContext.class);
+        org.springframework.security.core.Authentication authentication = mock(org.springframework.security.core.Authentication.class);
+        when(authentication.getName()).thenReturn(email);
+        when(authentication.getCredentials()).thenReturn("cred");
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+
+        when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
+        when(jwtTokenRepository.findByUserIdAndIsActive(user,true)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(JwtTokenNotFoundException.class, () -> onboardingService.logout());
     }
 }
