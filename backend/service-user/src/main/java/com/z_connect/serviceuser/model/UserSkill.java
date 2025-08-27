@@ -37,7 +37,7 @@ public class UserSkill {
      */
     @ManyToOne
     @JoinColumn(name = "candidate_id", insertable = false, updatable = false)
-    private Users users;
+    private Users user;
 
     /**
      * The skill itself.

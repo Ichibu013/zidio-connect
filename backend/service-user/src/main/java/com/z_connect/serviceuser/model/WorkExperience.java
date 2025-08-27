@@ -92,6 +92,7 @@ public class WorkExperience {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
+
     /**
      * The timestamp when this record was created.
      * Automatically set by the database.

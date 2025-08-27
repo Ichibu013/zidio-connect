@@ -59,13 +59,6 @@ public class Users {
 
 
     /**
-     * The user's phone number.
-     * This field is unique across all users.
-     */
-    @Column(name = "phone_number", length = 11, unique = true)
-    private String phoneNumber;
-
-    /**
      * The hashed password of the user.
      * This field cannot be null.
      */
@@ -81,16 +74,6 @@ public class Users {
     @Column(name = "role", nullable = false)
     @NotNull
     private Role role;
-
-    /**
-     * The company this user is associated with.
-     * This is an optional foreign key for recruiters.
-     * Mapped to the 'companies' table.
-     */
-    @ManyToOne
-    @JoinColumn(name = "company_id")
-    private Company company;
-
 
     @Column(name = "t_n_c_accpeted", nullable = false, columnDefinition = "boolean")
     private boolean tncAccepted;
@@ -117,8 +100,21 @@ public class Users {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    /**
+     * Indicates if the user is currently logged in to the system.
+     * This field is mapped to the "is_logged_in" column in the database and has a default value of false.
+     * It cannot be null and is used to track the user's login state.
+     */
     @Column(name = "is_logged_in", nullable = false, columnDefinition = "boolean default false")
     private boolean isLoggedIn;
+
+    /**
+     * Indicates whether the user is visible in the system.
+     * This field is mapped to the "is_visible" column in the database and has a default value of true.
+     * It cannot be null and is used to manage the visibility status of the user.
+     */
+    @Column(name = "is_visible", nullable = false, columnDefinition = "boolean default true")
+    private boolean isVisible = true;
 
 }
 

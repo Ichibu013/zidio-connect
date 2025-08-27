@@ -1,6 +1,8 @@
 package com.z_connect.serviceuser.model;
 
 import com.z_connect.common.enums.jobEnums.JobSearchStatus;
+import com.z_connect.common.model.Company;
+import com.z_connect.common.model.Users;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,9 +11,16 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
+/**
+ * Represents a user profile entity that contains detailed information about a user.
+ * It is linked to the 'users' table and includes information such as personal details,
+ * employment preferences, job search status, and other relevant metadata.
+ * This class is annotated with Hibernate and JPA annotations for ORM mapping.
+ */
 @Data
 @Entity
 @Table(name = "user_profile")
@@ -28,10 +37,58 @@ public class UserProfile {
     private Long id;
 
     /**
+     * Represents the user associated with this user profile.
+     * This is a one-to-one relationship to the 'users' table.
+     * It is mandatory and references the unique identifier of a user.
+     */
+    @OneToOne(targetEntity = Users.class)
+    @JoinColumn(name = "user_id", nullable = false)
+    private Users user;
+
+    /**
      * The country code for the user's phone number.
      */
-    @Column(name = "country_code")
-    private String countryCode;
+    @Column(name = "country")
+    private String country;
+
+    /**
+     * Represents the user's gender.
+     * Stored as a string in the database in the "gender" column.
+     * Common values may include "Male", "Female", "Other", or custom user-defined values.
+     */
+    @Column(name = "gender")
+    private String gender;
+
+    /**
+     * Represents the date of birth of the user associated with this profile.
+     * Stored in the database as a DATE type in the "dob" column.
+     */
+    @Column(name = "dob", columnDefinition = "DATE")
+    private LocalDate dob;
+
+    /**
+     * The user's phone number.
+     * This field is unique across all users.
+     */
+    @Column(name = "phone_number", length = 11, unique = true)
+    private String phoneNumber;
+
+    /**
+     * The company this user is associated with.
+     * This is an optional foreign key for recruiters.
+     * Mapped to the 'companies' table.
+     */
+    @ManyToOne(targetEntity = Company.class)
+    @JoinColumn(name = "company_id")
+    private Company company;
+
+    /**
+     * Indicates whether the user is considered a candidate for job opportunities.
+     * This field is mandatory and cannot be null.
+     * Defaults to true.
+     */
+    @Column(name = "is_candidate", nullable = false, columnDefinition = "boolean default true"  )
+    private Boolean isCandidate = true;
 
     /**
      * The active status of the user.
@@ -123,7 +180,7 @@ public class UserProfile {
      */
     @Column(name = "created_at", updatable = false)
     @CreationTimestamp
-    private Timestamp createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     /**
      * The timestamp when the user record was last updated.
@@ -131,6 +188,61 @@ public class UserProfile {
      */
     @Column(name = "updated_at")
     @UpdateTimestamp
-    private Timestamp updatedAt;
+    private LocalDateTime updatedAt;
+
+    /**
+     * Represents the list of work experiences associated with the user profile.
+     *
+     * This is a one-to-many relationship where each user profile can have multiple
+     * work experience records. Each work experience record provides details about
+     * the user's previous or current employment, such as job title, company name,
+     * and duration of employment.
+     *
+     * Mapped to the 'work_experience' table in the database. The relationship is
+     * maintained by the 'work_experience' foreign key in the child table.
+     */
+    @OneToMany(targetEntity = WorkExperience.class, mappedBy = "work_experience")
+    @JoinColumn(name = "work_experience")
+    private List<WorkExperience> workExperience;
+
+    /**
+     * Represents the educational background of the user associated with this profile.
+     *
+     * This is a one-to-many relationship where each user profile can have multiple
+     * education records. Each education record provides details about the user's
+     * academic qualifications, such as the name of the institution, degree, field of study,
+     * and the duration of attendance.
+     *
+     * Mapped to the 'education' table in the database. The relationship is maintained
+     * by the 'education' foreign key in the child table.
+     */
+    @OneToMany(targetEntity = Education.class, mappedBy = "education")
+    @JoinColumn(name = "education")
+    private List<Education> education;
+
+    /**
+     * Represents the list of skills associated with the user profile.
+     *
+     * This is a one-to-many relationship where each user profile can have multiple
+     * skills. It maps to the `user_skills` table in the database and maintains the association between a user and their skills.
+     *
+     * The relationship is managed through the `user_skill` foreign key in the child table.
+     */
+    @OneToMany(targetEntity = UserSkill.class, mappedBy = "user_skill")
+    @JoinColumn(name = "user_skills")
+    private List<UserSkill> userSkills;
+
+    /**
+     * Represents the list of resumes associated with the user profile.
+     *
+     * This is a one-to-many relationship where each user profile can have multiple
+     * resume records.
+     *
+     * Mapped to the 'resume' table in the database. The relationship is managed
+     * by the 'resume' foreign key in the child table.
+     */
+    @OneToMany(targetEntity = Resume.class, mappedBy = "resume")
+    @JoinColumn(name = "resume")
+    private List<Resume> resume;
 
 }

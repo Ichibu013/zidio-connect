@@ -113,7 +113,6 @@ class OnboardingServiceTest {
         user.setFirstName("John");
         user.setLastName("Doe");
         user.setEmail("john.doe@example.com");
-        user.setPhoneNumber("12345678901");
         user.setPassword("encodedPassword");
         user.setGeneratedOtp(123456L);
         user.setCreatedAt(LocalDateTime.now());
@@ -298,7 +297,6 @@ class OnboardingServiceTest {
         userWithoutRoleAndTimestamp.setFirstName("John");
         userWithoutRoleAndTimestamp.setLastName("Doe");
         userWithoutRoleAndTimestamp.setEmail("john.doe@example.com");
-        userWithoutRoleAndTimestamp.setPhoneNumber("12345678901");
         userWithoutRoleAndTimestamp.setPassword("password123");
         userWithoutRoleAndTimestamp.setRole(Role.CANDIDATE);
         userWithoutRoleAndTimestamp.setGeneratedOtp(123456L);

@@ -165,6 +165,32 @@ public class GlobalExceptionHandler extends RuntimeException {
                 );
     }
 
+    @ExceptionHandler(CompanyNotFoundException.class)
+    public ResponseEntity<GenericResponse<Map<String, String>>> handleCompanyNotFoundException(CompanyNotFoundException ex) {
+        log.error("CompanyNotFoundException: {}", ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(genericResponseFactory
+                        .errorResponse(
+                                getErrorDetails(ex),
+                                "error.company.not.found"
+                        )
+                );
+    }
+
+    @ExceptionHandler(ProfileNotFoundException.class)
+    public ResponseEntity<GenericResponse<Map<String, String>>> handleProfileNotFoundException(ProfileNotFoundException ex) {
+        log.error("ProfileNotFoundException: {}", ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(genericResponseFactory
+                        .errorResponse(
+                                getErrorDetails(ex),
+                                "error.profile.not.found"
+                        )
+                );
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<GenericResponse<Map<String, String>>> handleException(Exception ex) {
         log.error("Exception: {}", ex.getMessage());

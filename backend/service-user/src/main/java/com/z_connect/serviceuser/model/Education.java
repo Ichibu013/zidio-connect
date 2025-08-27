@@ -83,6 +83,12 @@ public class Education {
     @Column(name = "gpa_grade", length = 20)
     private String grade;
 
+    @Column(name = "location", length = 100)
+    private String location;
+
+    @Column(name = "is_current_education", columnDefinition = "boolean default false")
+    private Boolean isCurrentEducation = false;
+
     /**
      * The timestamp when this record was created.
      * Automatically set by the database.
