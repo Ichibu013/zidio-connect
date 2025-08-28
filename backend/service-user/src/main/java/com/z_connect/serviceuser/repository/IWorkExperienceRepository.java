@@ -7,6 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * Repository interface for managing {@link WorkExperience} entities.
+ * Extends {@link JpaRepository} to provide CRUD operations and custom query methods.
+ */
 @Repository
 public interface IWorkExperienceRepository extends JpaRepository<WorkExperience, Long> {
     Optional<WorkExperience> findByUser(Users user);

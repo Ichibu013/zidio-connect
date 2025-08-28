@@ -35,11 +35,11 @@ public class UserDetailsDto {
 
     private String companyName;
 
-    private List<ResumeDto> resume;
+    private ResumeDto resume;
 
-    private List<EducationDto> education;
+    private EducationDto education;
 
-    private List<WorkExperienceDto> workExperience;
+    private WorkExperienceDto workExperience;
 
     private List<UserSkillsDto> userSkills;
 

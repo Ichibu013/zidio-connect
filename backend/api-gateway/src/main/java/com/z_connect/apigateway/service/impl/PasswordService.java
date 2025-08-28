@@ -47,6 +47,13 @@ public class PasswordService extends BaseService implements IPasswordService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Handles the forgot password functionality by generating a password reset token and sending
+     * a password reset email to the provided email address.
+     *
+     * @param forgotPasswordDto the DTO containing the email of the user who wants to reset their password
+     * @return a generic response containing a success message and metadata
+     */
     @Override
     public GenericResponse<Map<String, String>> forgotPassword(ForgotPasswordDto forgotPasswordDto) {
         userRepository.findByEmail(forgotPasswordDto.getEmail()).ifPresent(this::createPasswordResetToken);
@@ -57,6 +64,15 @@ public class PasswordService extends BaseService implements IPasswordService {
         );
     }
 
+    /**
+     * Resets the password for a user using a provided reset token and new password.
+     * The method validates the provided token, updates the user's password if valid,
+     * and deletes the used token from the database. If the token is invalid or expired,
+     * an error response is returned.
+     *
+     * @param resetPasswordDto the DTO containing the reset token and the new password
+     * @return a generic response indicating the success or failure of the password reset operation
+     */
     @Override
     @Transactional
     public GenericResponse<Map<String, String>> resetPassword(ResetPasswordDto resetPasswordDto) {
@@ -81,6 +97,13 @@ public class PasswordService extends BaseService implements IPasswordService {
         );
     }
 
+    /**
+     * Generates a password reset token, associates it with the given user, and saves it
+     * in the database. Sends a password reset email to the user's registered email address.
+     *
+     * @param user the user for whom the password reset token is to be generated and associated
+     * @throws EmailNotSendException if sending the password reset email fails
+     */
     @Transactional
     protected void createPasswordResetToken(Users user) {
         String token = UUID.randomUUID().toString();
@@ -97,6 +120,13 @@ public class PasswordService extends BaseService implements IPasswordService {
         }
     }
 
+    /**
+     * Validates the provided password reset token by checking its existence and expiration status.
+     *
+     * @param token the password reset token to be validated
+     * @return a string indicating validation status: "Invalid token" if the token does not exist,
+     *         "Token expired" if the token has expired, or null if the token is valid
+     */
     private String validatePasswordResetToken(String token) {
         PasswordResetToken passwordResetToken = passwordResetTokenRepository.findByToken(token);
         if (passwordResetToken == null) {

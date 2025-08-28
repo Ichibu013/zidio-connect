@@ -97,6 +97,12 @@ services:
       - SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT=20000
       - SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE=5
       - SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE=20
+      - CLOUDINARY_URL=cloudinary://318266137966868:iVm5HeOd_lrStCvJCd4lbzS79Ds@dxuhcimdw
+      - CLOUDINARY_NAME=dxuhcimdw
+      - CLOUDINARY_API_KEY=318266137966868
+      - CLOUDINARY_API_SECRET=iVm5HeOd_lrStCvJCd4lbzS79Ds
+      - CLOUDINARY_PREFIX=zidio-connect/
+      -
     command: ["java", "-jar", "/app/service-user.jar"]
     depends_on:
       - mysqldb

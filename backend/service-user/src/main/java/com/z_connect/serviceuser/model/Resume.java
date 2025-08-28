@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  * Represents a candidate's resume.
@@ -64,5 +64,5 @@ public class Resume {
      */
     @Column(name = "uploaded_at", updatable = false)
     @CreationTimestamp
-    private Timestamp uploadedAt;
+    private LocalDateTime uploadedAt = LocalDateTime.now();
 }

@@ -1,4 +1,4 @@
-package com.z_connect.serviceuser.dto;
+package com.z_connect.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,11 +9,9 @@ import java.util.List;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class UserSkillsDto {
+@AllArgsConstructor
+public class SkillInfoDto {
 
-    private List<String> skills;
-
-    private String ProficiencyLevel;
+    private List<String> skillName;
 }

@@ -29,6 +29,6 @@ public class Skill {
      * This column is unique, not nullable, and has a maximum length of 100 characters.
      */
     @Column(name = "skill_name", length = 100, nullable = false, unique = true)
-    private String skill_name;
+    private String skillName;
 
 }

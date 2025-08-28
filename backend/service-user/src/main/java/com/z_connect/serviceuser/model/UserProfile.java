@@ -190,35 +190,30 @@ public class UserProfile {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    /**
-     * Represents the list of work experiences associated with the user profile.
-     *
-     * This is a one-to-many relationship where each user profile can have multiple
-     * work experience records. Each work experience record provides details about
-     * the user's previous or current employment, such as job title, company name,
-     * and duration of employment.
-     *
-     * Mapped to the 'work_experience' table in the database. The relationship is
-     * maintained by the 'work_experience' foreign key in the child table.
-     */
-    @OneToMany(targetEntity = WorkExperience.class, mappedBy = "work_experience")
-    @JoinColumn(name = "work_experience")
-    private List<WorkExperience> workExperience;
 
     /**
-     * Represents the educational background of the user associated with this profile.
+     * Represents the work experience associated with the user profile.
      *
-     * This is a one-to-many relationship where each user profile can have multiple
-     * education records. Each education record provides details about the user's
-     * academic qualifications, such as the name of the institution, degree, field of study,
-     * and the duration of attendance.
+     * This is a one-to-one relationship with the `WorkExperience` entity,
+     * where the field is mapped by the "work_experience" attribute in the `WorkExperience` class.
+     * The primary join column is "work_experience_primary".
      *
-     * Mapped to the 'education' table in the database. The relationship is maintained
-     * by the 'education' foreign key in the child table.
+     * This field provides detailed employment history or work-related data for the user.
      */
-    @OneToMany(targetEntity = Education.class, mappedBy = "education")
-    @JoinColumn(name = "education")
-    private List<Education> education;
+    @OneToOne(targetEntity = WorkExperience.class, mappedBy = "work_experience")
+    @JoinColumn(name = "work_experience_primary")
+    private WorkExperience workExperiencePrimary;
+
+
+    /**
+     * Represents the education information associated with the user profile.
+     *
+     * This field establishes a one-to-one relationship with the `Education` entity,
+     * where the association is mapped by the "education" attribute in the `Education` class.
+     * The primary join column*/
+    @OneToOne(targetEntity = Education.class, mappedBy = "education")
+    @JoinColumn(name = "education_primary")
+    private Education educationPrimary;
 
     /**
      * Represents the list of skills associated with the user profile.
@@ -232,17 +227,18 @@ public class UserProfile {
     @JoinColumn(name = "user_skills")
     private List<UserSkill> userSkills;
 
+
     /**
-     * Represents the list of resumes associated with the user profile.
+     * Represents the primary resume associated with the user profile.
      *
-     * This is a one-to-many relationship where each user profile can have multiple
-     * resume records.
+     * This is a one-to-one relationship with the `Resume` entity,
+     * where the association is mapped by the "resume" attribute in the `Resume` class.
+     * The primary join column is "resume_primary".
      *
-     * Mapped to the 'resume' table in the database. The relationship is managed
-     * by the 'resume' foreign key in the child table.
+     * This field holds the primary resume file and its metadata for the user.
      */
-    @OneToMany(targetEntity = Resume.class, mappedBy = "resume")
-    @JoinColumn(name = "resume")
-    private List<Resume> resume;
+    @OneToOne(targetEntity = Resume.class, mappedBy = "resume")
+    @JoinColumn(name = "resume_primary")
+    private Resume resumePrimary;
 
 }

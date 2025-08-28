@@ -31,6 +31,6 @@ public class JobCategory {
      */
     @Column(name = "category_name",length = 100,nullable = false,unique = true)
     @NotNull
-    private String category_name;
+    private String categoryName;
 
 }

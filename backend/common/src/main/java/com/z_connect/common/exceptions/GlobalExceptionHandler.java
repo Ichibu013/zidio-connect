@@ -191,6 +191,45 @@ public class GlobalExceptionHandler extends RuntimeException {
                 );
     }
 
+    @ExceptionHandler(CloudinaryOperationFailedException.class)
+    public ResponseEntity<GenericResponse<Map<String, String>>> handleCloudinaryOperationFailedException(CloudinaryOperationFailedException ex) {
+        log.error("CloudinaryOperationFailedException: {}", ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(genericResponseFactory
+                        .errorResponse(
+                                getErrorDetails(ex),
+                                "error.cloudinary.operation.failed"
+                        )
+                );
+    }
+
+    @ExceptionHandler(ItemNotFoundException.class)
+    public ResponseEntity<GenericResponse<Map<String, String>>> handleItemNotFoundException(ItemNotFoundException ex) {
+        log.error("ItemNotFoundException: {}", ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(genericResponseFactory
+                        .errorResponse(
+                                getErrorDetails(ex),
+                                "error.item.not.found"
+                        )
+                );
+    }
+
+    @ExceptionHandler(SkillNotFoundException.class)
+    public ResponseEntity<GenericResponse<Map<String, String>>> handleSkillNotFoudException(SkillNotFoundException ex) {
+        log.error("SkillNotFoundException: {}", ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(genericResponseFactory
+                        .errorResponse(
+                                getErrorDetails(ex),
+                                "error.skill.not.found"
+                        )
+                );
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<GenericResponse<Map<String, String>>> handleException(Exception ex) {
         log.error("Exception: {}", ex.getMessage());

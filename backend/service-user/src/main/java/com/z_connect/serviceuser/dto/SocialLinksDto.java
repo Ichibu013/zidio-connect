@@ -5,15 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class UserSkillsDto {
+@AllArgsConstructor
+public class SocialLinksDto {
 
-    private List<String> skills;
+    private String linkedinUrl;
 
-    private String ProficiencyLevel;
+    private String githubUrl;
+
+    private String portfolioUrl;
 }
