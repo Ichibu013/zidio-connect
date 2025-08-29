@@ -42,7 +42,7 @@ export default function LocationDropdown() {
       {/* Dropdown toggle button */}
       <button
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-        className="flex items-center p-3 text-gray-700 border-r border-gray-200 flex-grow hover:bg-gray-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-200"
+        className="flex items-center p-3 text-gray-700 border-r border-gray-200 flex-grow hover:bg-gray-50 hover:rounded-l-lg transition-colors duration-200 focus:outline-none"
       >
         <span className="text-xl mr-2">{selectedCountry.flag}</span>
         <span className="font-semibold text-sm ">{selectedCountry.name}</span>
@@ -51,7 +51,7 @@ export default function LocationDropdown() {
 
       {/* Dropdown menu list */}
       {isDropdownOpen && (
-        <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10 max-h-60 overflow-y-auto">
+        <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 max-h-60 overflow-y-auto">
           {countries.map((country, index) => (
             <div
               key={index}

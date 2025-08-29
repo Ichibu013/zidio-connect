@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRouter, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Heading from "../misc/Heading";
 import InputBox from "../inputBox/input-box";
 import ArrowButton from "../buttons/Arrow-Button";
@@ -8,9 +8,9 @@ import SocialButtons from "../buttons/Social-Buttons";
 import BasicHeader from "../headers/BasicHeader";
 import { IoArrowForward } from "react-icons/io5";
 import { forgotPassword } from "@/services/auth/forgotPasswordService";
-import { s } from "framer-motion/dist/types.d-Cjd591yU";
 import InfoToast from "../toasts/InfoToast";
 import ErrorToast from "../toasts/ErrorToast";
+import { useRouter } from "next/navigation";
 
 export default function ForgotPasswordForm() {
   const [infoToast, setInfoToast] = useState(false);
@@ -83,7 +83,7 @@ export default function ForgotPasswordForm() {
           </a>
         </p>
         <p className="text-gray-600 mb-6">
-          Don't have account?{" "}
+          Don&#39;t have account?{" "}
           <a href="/auth/signup" className="text-blue-600 hover:underline">
             Create account
           </a>

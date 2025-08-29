@@ -1,15 +1,18 @@
+'use client'
 import ArrowButton from "../buttons/Arrow-Button";
 import SocialButtons from "../buttons/Social-Buttons";
 import Heading from "../misc/Heading";
 import InputBox from "../inputBox/input-box";
 import OR from "../misc/Or-seperator";
-import { useState, useRouter, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { IoArrowForward } from "react-icons/io5";
 import { login } from "@/services/auth/loginService";
 import BasicHeader from "../headers/BasicHeader";
 import TickBox from "../misc/TickBox";
 import PasswordBox from "../inputBox/password-box";
 import SuccessToast from "../toasts/SucessToast";
+import ErrorToast from "../toasts/ErrorToast";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
   // Varible that collect input field data
@@ -109,7 +112,7 @@ export default function LoginForm() {
         {/* Heading and Login Form */}
         <Heading text={"Sign in"} />
         <p className="text-gray-600 mb-6">
-          Don't have account?{" "}
+          Don&#39;t have account?{" "}
           <a href="/auth/signup" className="text-blue-600 hover:underline">
             Create account
           </a>
