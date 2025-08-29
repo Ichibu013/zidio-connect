@@ -1,4 +1,4 @@
-package com.z_connect.common.service;
+package com.z_connect.serviceadmin.services.impl;
 
 import com.z_connect.common.dto.CompanyInfoDto;
 import com.z_connect.common.dto.JobCategoryInfoDto;
@@ -9,6 +9,7 @@ import com.z_connect.common.model.Skill;
 import com.z_connect.common.repository.ICompanyRepository;
 import com.z_connect.common.repository.IJobCategoryRepository;
 import com.z_connect.common.repository.ISkillRepository;
+import com.z_connect.common.service.BaseService;
 import com.z_connect.common.utils.mapping.GenericDtoMapper;
 import com.z_connect.common.utils.response.GenericResponse;
 import com.z_connect.common.utils.response.GenericResponseFactory;
