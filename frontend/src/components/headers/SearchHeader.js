@@ -1,15 +1,13 @@
 "use client";
 import SeachInputBox from "../inputBox/SearchInputField";
 import SearchHeaderActionBtns from "../panels/HeaderActionButtonPanels/SearchHeaderActionBtns";
-import SignInBtn from "../buttons/HeaderBtn/SignInBtn";
-import PostAJobBtn from "../buttons/HeaderBtn/PostAJobBtn";
 import LocationDropdown from "../misc/LocationDropDown";
-import { AiOutlineBarcode } from "react-icons/ai";
-import { redirect } from "next/navigation";
-import { useState } from "react";
+import {AiOutlineBarcode} from "react-icons/ai";
+import {redirect} from "next/navigation";
+import {useState} from "react";
 import SpiningLoadingOverLay from "../LoadingOverLays/SpiningLoadingOverLay";
 
-export default function SearchHeader({ btn1, btn2, btn3 }) {
+export default function SearchHeader({ btn1, btn2, btn3 , btn4, isLoggedIn}) {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleRedirect = () => {
@@ -22,7 +20,7 @@ export default function SearchHeader({ btn1, btn2, btn3 }) {
       {/* Loading Overlay */}
       {isLoading && <SpiningLoadingOverLay />}
 
-      {/* Left Scetion: Logo and Site Name */}
+      {/* Left Section: Logo and Site Name */}
       <div
         onClick={handleRedirect}
         className={`flex items-center space-x-2 gap-1 cursor-pointer ${
@@ -33,7 +31,7 @@ export default function SearchHeader({ btn1, btn2, btn3 }) {
         <span className="text-3x1 font-bold text-gray-800">ZIDIO Connect</span>
       </div>
 
-      {/* Midldle Section: Search Bar  */}
+      {/* Middle Section: Search Bar  */}
       <div className="sm:hidden md:flex flex-grow justify-start lg:ml-8 lg:mr-36 rounded-md border border-gray-300">
         {/* Location dropdown/input simulation */}
         <LocationDropdown />
@@ -42,7 +40,7 @@ export default function SearchHeader({ btn1, btn2, btn3 }) {
         <SeachInputBox />
       </div>
       {/* Right Section: Action Buttons */}
-      <SearchHeaderActionBtns btn1={btn1} btn2={btn2} btn3={btn3} />
+      <SearchHeaderActionBtns btn1={btn1} btn2={btn2} btn3={btn3} btn4={btn4} isLoggedIn={isLoggedIn} />
     </div>
   );
 }

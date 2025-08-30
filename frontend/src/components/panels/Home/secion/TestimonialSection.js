@@ -1,7 +1,6 @@
-import { FaRegUserCircle } from "react-icons/fa";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import {FaRegUserCircle} from "react-icons/fa";
+import {IoIosArrowBack, IoIosArrowForward} from "react-icons/io";
+import React, {useEffect, useRef, useState} from "react";
 
 export default function TestimonialSection({ testimonials }) {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -84,7 +83,7 @@ export default function TestimonialSection({ testimonials }) {
                             className="flex-shrink-0 w-full md:w-1/3 p-6 bg-white rounded-lg shadow-sm border border-gray-200"
                             style={{ scrollSnapAlign: "center" }}
                         >
-                            <FaRegUserCircle className="text-indigo-600 mb-4" size={40} />
+                            <FaRegUserCircle className="text-blue-500 mb-4" size={40} />
                             <p className="text-gray-600">{testimonial.text}</p>
                             <div className="mt-4 flex items-center space-x-3">
                                 <img
@@ -105,25 +104,25 @@ export default function TestimonialSection({ testimonials }) {
                 <button
                     onClick={handlePrev}
                     disabled={currentIndex === 0}
-                    className="absolute left-0 top-1/2 -translate-y-1/2 bg-white rounded-xl p-2 shadow-md hover:bg-gray-100 transition-colors"
+                    className="absolute left-0 top-1/2 -translate-y-1/2 bg-white rounded-xl p-2 shadow-md transition-colors opacity-60 hover:opacity-100 hover:bg-blue-500 group ease-in-out"
                 >
-                    <IoIosArrowBack size={24} className="text-blue-500" />
+                    <IoIosArrowBack size={24} className="text-blue-500 group-hover:text-white" />
                 </button>
                 <button
                     onClick={handleNext}
                     // 3. Use the new state variable in the disabled check
                     disabled={currentIndex >= testimonials.length - getVisibleCards()}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 bg-white rounded-xl p-2 shadow-md hover:bg-gray-100 transition-colors"
+                    className="absolute right-0 top-1/2 -translate-y-1/2 bg-white rounded-xl p-2 shadow-md ransition-colors opacity-60 hover:opacity-100 hover:bg-blue-500 group ease-in-out"
                 >
-                    <IoIosArrowForward size={24} className="text-blue-500" />
+                    <IoIosArrowForward size={24} className="text-blue-500 group-hover:text-white " />
                 </button>
-                <div className="absolute translate-y-6 left-1/2 -translate-x-1/2 flex space-x-2">
+                <div className="absolute translate-y-6 left-1/2 -translate-x-1/2 flex space-x-2 justify-center items-center opacity-80">
                     {testimonials.map((_, index) => (
                         <button
                             key={index}
                             onClick={() => handleDotClick(index)}
                             className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-                                index === currentIndex ? 'bg-indigo-600' : 'bg-gray-300 hover:bg-gray-400'
+                                index === currentIndex ? 'bg-blue-500' : 'bg-gray-300 hover:bg-gray-400'
                             }`}
                         ></button>
                     ))}

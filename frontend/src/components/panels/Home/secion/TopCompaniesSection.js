@@ -5,7 +5,7 @@ export default function TopCompaniesSection({ topCompanies}) {
         <div className="container mx-auto px-4">
             <div className="flex justify-between items-center mb-8">
                 <h3 className="text-3xl font-bold text-gray-900">Top companies</h3>
-                <a href="#" className="flex items-center text-indigo-600 font-medium">
+                <a href="#" className="flex items-center text-blue-500 font-medium">
                     See all <IoArrowForward size={16} className="ml-1"/>
                 </a>
             </div>
@@ -28,7 +28,7 @@ export default function TopCompaniesSection({ topCompanies}) {
                             </div>
                         </div>
                         <button
-                            className="mt-4 w-full py-2 bg-indigo-50 text-indigo-600 font-medium rounded-lg hover:bg-indigo-100 transition duration-300">
+                            className="mt-4 w-full py-2 bg-indigo-50 text-blue-500   font-medium rounded-lg hover:bg-indigo-100 transition duration-300">
                             Open Positions ({company.jobs})
                         </button>
                     </div>

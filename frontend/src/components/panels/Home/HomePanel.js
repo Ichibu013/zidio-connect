@@ -34,22 +34,22 @@ export default function HomePanel() {
 
     const howItWorks = [
         {
-            icon: <FaRegUserCircle size={48} className="mx-auto"/>,
+            icon: <FaRegUserCircle size={40} className="mx-auto"/>,
             title: 'Create Account',
             description: 'First, create an account on the platform.',
         },
         {
-            icon: <FaBriefcase size={48} className="mx-auto"/>,
+            icon: <FaBriefcase size={40} className="mx-auto"/>,
             title: 'Upload Your CV/Resume',
             description: 'Upload your updated resume or CV.',
         },
         {
-            icon: <IoSearch size={48} className="mx-auto"/>,
+            icon: <IoSearch size={40} className="mx-auto"/>,
             title: 'Search Job',
             description: 'Find your desired job you want.',
         },
         {
-            icon: <FaBriefcase size={48} className="mx-auto"/>,
+            icon: <FaBriefcase size={40} className="mx-auto"/>,
             title: 'Apply Job',
             description: 'Apply for the job you like and get placed.',
         },
@@ -195,6 +195,7 @@ export default function HomePanel() {
                     <HeroSection/>
                 </div>
             </section>
+
             {/* Stats Section */}
             <div className="bg-gray-100">
                 <div className="max-w-7xl mx-auto px-2 pb-10 sm:px-4 lg:px-6">

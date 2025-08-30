@@ -59,6 +59,7 @@ export default function HeroSection() {
                 <Image
                     src={HeroImage}
                     alt="Hero Illustration"
+                    height={585}
                 />
             </div>
         </div>

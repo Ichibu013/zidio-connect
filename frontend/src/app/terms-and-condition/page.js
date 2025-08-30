@@ -1,7 +1,6 @@
 import PostAJobBtn from "@/components/buttons/HeaderBtn/PostAJobBtn";
 import SignInBtn from "@/components/buttons/HeaderBtn/SignInBtn";
 import FooterWithLinks from "@/components/footer/FooterWithLinks";
-import NavHeader from "@/components/headers/NavHeader/NavHeaderContainer";
 import SearchHeader from "@/components/headers/SearchHeader";
 import SubHeader from "@/components/headers/SubHeader";
 import TncBox from "@/components/misc/TncBox";
@@ -9,7 +8,6 @@ import TncBox from "@/components/misc/TncBox";
 export default function TermsCondition() {
   return (
     <>
-      <NavHeader />
       <div className="bg-white min-h-screen pt-10">
         {/* SearchHeader component */}
         <SearchHeader btn1={<SignInBtn />} btn3={<PostAJobBtn />} />

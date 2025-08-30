@@ -18,7 +18,7 @@ export default function CtaSection() {
                         Get registered as a candidate and start exploring.
                     </p>
                     <button
-                        className="mt-4 px-6 py-3 bg-white text-blue-500 font-medium rounded-lg hover:bg-gray-100 transition-colors">
+                        className="mt-4 px-6 py-3 bg-white text-blue-500 font-medium rounded-lg hover:bg-gray-100 hover:scale-102 transition-colors cursor-pointer">
                         Register Here
                     </button>
                 </div>
@@ -38,7 +38,7 @@ export default function CtaSection() {
                         Get registered as recruiter and start hiring.
                     </p>
                     <button
-                        className="mt-4 px-6 py-3 bg-white text-blue-600 font-medium rounded-lg hover:bg-gray-100 transition-colors">
+                        className="mt-4 px-6 py-3 bg-white text-blue-600 font-medium rounded-lg hover:bg-gray-100 hover:scale-102 transition-colors cursor-pointer">
                         Register Here
                     </button>
                 </div>

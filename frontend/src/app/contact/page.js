@@ -7,13 +7,11 @@ import ContactRightPanel from "@/components/panels/Contact/ContactRightPanel";
 import EamilSubFooterPanel from "@/components/panels/Contact/EmailSub";
 import SignInBtn from "@/components/buttons/HeaderBtn/SignInBtn";
 import PostAJobBtn from "@/components/buttons/HeaderBtn/PostAJobBtn";
-import NavHeader from "@/components/headers/NavHeader/NavHeaderContainer";
 import FooterWithLinks from "@/components/footer/FooterWithLinks";
 
 export default function Contact() {
   return (
     <div className="bg-white min-h-screen">
-      <NavHeader />
       <div className="pt-10">
         <header className="flex flex-col ">
           {/* SearchHeader component */}
