@@ -3,13 +3,11 @@ import PostAJobBtn from "@/components/buttons/HeaderBtn/PostAJobBtn";
 import SignInBtn from "@/components/buttons/HeaderBtn/SignInBtn";
 import SearchHeader from "@/components/headers/SearchHeader";
 import DashboardSideNav from "@/components/nav/DashboardSideNav";
-import { useState } from "react";
-import { PiUserCircleGear } from "react-icons/pi";
-import { RiNotification4Line } from "react-icons/ri";
-import { LuBookmark } from "react-icons/lu";
-import { RiStackLine } from "react-icons/ri";
-import { LuBriefcase } from "react-icons/lu";
-import { useSearchParams } from "next/navigation";
+import {useState} from "react";
+import {PiUserCircleGear} from "react-icons/pi";
+import {RiNotification4Line, RiStackLine} from "react-icons/ri";
+import {LuBookmark, LuBriefcase} from "react-icons/lu";
+import {useSearchParams} from "next/navigation";
 import CadSetting from "@/components/panels/Candidate/Dashboard/Settings/CadSetting";
 
 // Helper function to map the URL parameter to the tab name
@@ -79,7 +77,7 @@ export default function CandidateDashboard() {
             activeTabparm={activeTab}
           />
           {/* Main Content Area */}
-          <div className="flex-1 h-full overflow-y-scroll scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-gray-100 absolute md:relative pb-20 ">
+          <div className="flex-1 h-full overflow-y-scroll scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-gray-100 absolute md:relative pb-20  ">
             {/* Conditional rendering based on active tab */}
             {activeTab === "Overview" && null}
             {activeTab === "Applied Jobs" && null}
