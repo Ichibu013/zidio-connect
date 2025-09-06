@@ -1,33 +1,50 @@
-FROM eclipse-temurin:21-jdk
-
-LABEL maintainer="Zidio Connect Team"
-
-# Set working directory
+# STAGE 1: Build all Maven modules
+FROM maven:3.9.6-eclipse-temurin-21 AS builder
 WORKDIR /app
+COPY pom.xml .
+COPY common/pom.xml ./common/pom.xml
+COPY api-gateway/pom.xml ./api-gateway/pom.xml
+COPY service-admin/pom.xml ./service-admin/pom.xml
+COPY service-user/pom.xml ./service-user/pom.xml
+COPY service-application/pom.xml ./service-application/pom.xml
+COPY service-job/pom.xml ./service-job/pom.xml
+COPY service-analytics/pom.xml ./service-analytics/pom.xml
+RUN mvn dependency:go-offline -B
+COPY . .
+RUN mvn clean install -DskipTests
 
-# Copy the jar files from each module
-COPY api-gateway/target/api-gateway.jar /app/api-gateway.jar
-COPY service-admin/target/service-admin.jar /app/service-admin.jar
-COPY service-user/target/service-user.jar /app/service-user.jar
-COPY service-application/target/service-application.jar /app/service-application.jar
-COPY service-job/target/service-job.jar /app/service-job.jar
-COPY service-analytics/target/service-analytics.jar /app/service-analytics.jar
-COPY common/target/common.jar /app/common.jar
+# STAGE 2: Create image for api-gateway
+FROM eclipse-temurin:21-jre-alpine AS api-gateway
+WORKDIR /app
+COPY --from=builder /app/api-gateway/target/api-gateway.jar .
+ENTRYPOINT ["java", "-jar", "api-gateway.jar"]
 
-# Copy application configuration
-COPY src/main/resources/application.yml /app/application.yml
+# STAGE 3: Create image for service-admin
+FROM eclipse-temurin:21-jre-alpine AS service-admin
+WORKDIR /app
+COPY --from=builder /app/service-admin/target/service-admin.jar .
+ENTRYPOINT ["java", "-jar", "service-admin.jar"]
 
-# Create volume for temporary files
-VOLUME /tmp
+# STAGE 4: Create image for service-user
+FROM eclipse-temurin:21-jre-alpine AS service-user
+WORKDIR /app
+COPY --from=builder /app/service-user/target/service-user.jar .
+ENTRYPOINT ["java", "-jar", "service-user.jar"]
 
-# Expose the ports for each service
-EXPOSE 8080 8081 8082 8083 8084 8085 8086
+# STAGE 5: Create image for service-application
+FROM eclipse-temurin:21-jre-alpine AS service-application
+WORKDIR /app
+COPY --from=builder /app/service-application/target/service-application.jar .
+ENTRYPOINT ["java", "-jar", "service-application.jar"]
 
-# Set Java options
-ENV JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Xms512m -Xmx1g"
+# STAGE 6: Create image for service-job
+FROM eclipse-temurin:21-jre-alpine AS service-job
+WORKDIR /app
+COPY --from=builder /app/service-job/target/service-job.jar .
+ENTRYPOINT ["java", "-jar", "service-job.jar"]
 
-# Set the startup command
-CMD ["java", "-jar", "api-gateway.jar"]
-
-# Add healthcheck
-HEALTHCHECK --interval=30s --timeout=3s CMD curl -f http://localhost:8080/actuator/health || exit 1
+# STAGE 7: Create image for service-analytics
+FROM eclipse-temurin:21-jre-alpine AS service-analytics
+WORKDIR /app
+COPY --from=builder /app/service-analytics/target/service-analytics.jar .
+ENTRYPOINT ["java", "-jar", "service-analytics.jar"]

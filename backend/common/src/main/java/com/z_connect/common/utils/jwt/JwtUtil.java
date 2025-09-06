@@ -8,6 +8,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -20,12 +21,15 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-    @Autowired
+    @Autowired(required = false)
+    @Nullable
     private IJwtTokenRepository jwtTokenRepository;
 
     private static final String secretKey = "yoZW5jb2RlZCBieSBzZWN1cml0eS1taW5kZWQgYmFzZTY0LWVuY29kZXI";
     private static final long jwtExpirationMs = 3600000;
 
+    public JwtUtil() {
+    }
 
     public String extractEmail(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -63,7 +67,7 @@ public class JwtUtil {
         extraClaims.put("role", userDetails.getAuthorities());
         do {
             token = generateToken(extraClaims, userDetails);
-        } while (jwtTokenRepository.existsByToken(token));
+        } while (jwtTokenRepository != null && jwtTokenRepository.existsByToken(token));
         return token;
     }
 

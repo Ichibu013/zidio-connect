@@ -9,7 +9,6 @@ import com.z_connect.common.model.Users;
 import com.z_connect.common.repository.IPasswordResetTokenRepository;
 import com.z_connect.common.repository.IUserRepository;
 import com.z_connect.common.service.BaseService;
-import com.z_connect.common.service.EmailService;
 import com.z_connect.common.utils.mapping.GenericDtoMapper;
 import com.z_connect.common.utils.response.GenericResponse;
 import com.z_connect.common.utils.response.GenericResponseFactory;

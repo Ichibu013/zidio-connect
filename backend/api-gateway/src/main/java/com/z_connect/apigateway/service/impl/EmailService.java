@@ -1,4 +1,4 @@
-package com.z_connect.common.service;
+package com.z_connect.apigateway.service.impl;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;

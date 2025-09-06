@@ -12,7 +12,6 @@ import com.z_connect.common.model.Users;
 import com.z_connect.common.repository.IJwtTokenRepository;
 import com.z_connect.common.repository.IUserRepository;
 import com.z_connect.common.service.BaseService;
-import com.z_connect.common.service.EmailService;
 import com.z_connect.common.utils.jwt.JwtUtil;
 import com.z_connect.common.utils.mapping.GenericDtoMapper;
 import com.z_connect.common.utils.response.GenericResponse;

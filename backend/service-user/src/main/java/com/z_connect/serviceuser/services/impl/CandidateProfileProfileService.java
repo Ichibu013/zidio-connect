@@ -413,7 +413,7 @@ public class CandidateProfileProfileService extends BaseService implements ICand
 
         for (String skillName : newSkills) {
             if (!existingUserSkills.contains(skillName)) {
-                Skill skill = skillRepository.findBySkill_name(skillName)
+                Skill skill = skillRepository.findBySkillName(skillName)
                         .orElseThrow(() -> new SkillNotFoundException("Skill not found with name: " + skillName));
 
                 UserSkill userSkill = new UserSkill();

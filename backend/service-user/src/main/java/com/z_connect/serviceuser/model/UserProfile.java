@@ -200,7 +200,7 @@ public class UserProfile {
      *
      * This field provides detailed employment history or work-related data for the user.
      */
-    @OneToOne(targetEntity = WorkExperience.class, mappedBy = "work_experience")
+    @OneToOne
     @JoinColumn(name = "work_experience_primary")
     private WorkExperience workExperiencePrimary;
 
@@ -211,7 +211,7 @@ public class UserProfile {
      * This field establishes a one-to-one relationship with the `Education` entity,
      * where the association is mapped by the "education" attribute in the `Education` class.
      * The primary join column*/
-    @OneToOne(targetEntity = Education.class, mappedBy = "education")
+    @OneToOne
     @JoinColumn(name = "education_primary")
     private Education educationPrimary;
 
@@ -223,8 +223,8 @@ public class UserProfile {
      *
      * The relationship is managed through the `user_skill` foreign key in the child table.
      */
-    @OneToMany(targetEntity = UserSkill.class, mappedBy = "user_skill")
-    @JoinColumn(name = "user_skills")
+    @OneToMany
+    @JoinColumn(name = "candidate_id", referencedColumnName = "user_id")
     private List<UserSkill> userSkills;
 
 
@@ -237,7 +237,7 @@ public class UserProfile {
      *
      * This field holds the primary resume file and its metadata for the user.
      */
-    @OneToOne(targetEntity = Resume.class, mappedBy = "resume")
+    @OneToOne
     @JoinColumn(name = "resume_primary")
     private Resume resumePrimary;
 

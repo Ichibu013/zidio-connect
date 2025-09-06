@@ -1,13 +1,6 @@
 package com.z_connect.common;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-@SpringBootApplication
-public class CommonApplication {
-
-    public static void main(String[] args) {
-        SpringApplication.run(CommonApplication.class, args);
-    }
-
+// This module is a plain library shared by other services. It should not be a Spring Boot application.
+public final class CommonApplication {
+    private CommonApplication() {}
 }

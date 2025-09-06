@@ -78,7 +78,7 @@ class OnboardingServiceTest {
     private com.z_connect.common.utils.jwt.JwtUtil jwtUtil;
 
     @Mock
-    private com.z_connect.common.service.EmailService emailService;
+    private EmailService emailService;
 
     @InjectMocks
     private OnboardingService onboardingService;
