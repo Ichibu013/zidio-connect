@@ -2,7 +2,6 @@ package com.z_connect.serviceuser.services.interfaces;
 
 import com.z_connect.common.utils.response.GenericResponse;
 import com.z_connect.serviceuser.dto.*;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -11,7 +10,6 @@ import java.util.Map;
 /**
  * Service interface for managing candidate profiles and related operations.
  */
-@Service
 public interface ICandidateProfileService {
 
     GenericResponse<BasicInfoDto> getBasicCandidateDetails();

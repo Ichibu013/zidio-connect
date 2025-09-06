@@ -44,11 +44,6 @@ services:
     command: ["java", "-jar", "/app/api-gateway.jar"]
     depends_on:
       - mysqldb
-      - service-admin
-      - service-user
-      - service-application
-      - service-job
-      - service-analytics
     networks:
       - zidio-network
     healthcheck:
@@ -77,6 +72,7 @@ services:
     command: ["java", "-jar", "/app/service-admin.jar"]
     depends_on:
       - mysqldb
+      - api-gateway
     networks:
       - zidio-network
 
@@ -102,10 +98,10 @@ services:
       - CLOUDINARY_API_KEY=318266137966868
       - CLOUDINARY_API_SECRET=iVm5HeOd_lrStCvJCd4lbzS79Ds
       - CLOUDINARY_PREFIX=zidio-connect/
-      -
     command: ["java", "-jar", "/app/service-user.jar"]
     depends_on:
       - mysqldb
+      - api-gateway
     networks:
       - zidio-network
 
@@ -129,6 +125,7 @@ services:
     command: ["java", "-jar", "/app/service-application.jar"]
     depends_on:
       - mysqldb
+      - api-gateway
     networks:
       - zidio-network
 
@@ -152,6 +149,7 @@ services:
     command: ["java", "-jar", "/app/service-job.jar"]
     depends_on:
       - mysqldb
+      - api-gateway
     networks:
       - zidio-network
 
@@ -175,6 +173,7 @@ services:
     command: ["java", "-jar", "/app/service-analytics.jar"]
     depends_on:
       - mysqldb
+      - api-gateway
     networks:
       - zidio-network
 
