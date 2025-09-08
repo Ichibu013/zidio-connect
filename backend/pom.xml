@@ -49,8 +49,7 @@
         <springdoc.version>2.6.0</springdoc.version>
         <lombok.version>1.18.38</lombok.version>
         <spring-boot.version>3.5.4</spring-boot.version>
-        <cloudinary-core.version>2.3.2</cloudinary-core.version>
-        <cloudinary-http.version>1.39.0</cloudinary-http.version>
+        <cloudinary-core.version>1.39.0</cloudinary-core.version>
     </properties>
 
 
@@ -161,18 +160,11 @@
             <version>${springdoc.version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.cloudinary/cloudinary-core -->
+        <!-- Cloudinary Java SDK v1: core + HTTP44 adapter (aligned versions) -->
         <dependency>
             <groupId>com.cloudinary</groupId>
-            <artifactId>cloudinary-core</artifactId>
-            <version>${cloudinary-core.version}</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.cloudinary/cloudinary-http44 -->
-        <dependency>
-            <groupId>com.cloudinary</groupId>
-            <artifactId>cloudinary-http44</artifactId>
-            <version>${cloudinary-http.version}</version>
+            <artifactId>cloudinary-http5</artifactId>
+            <version>2.3.2</version>
         </dependency>
 
     </dependencies>
