@@ -2,7 +2,7 @@
 import {useEffect, useRef, useState} from 'react';
 import {LuCirclePlus, LuUpload} from "react-icons/lu";
 import {IoIosClose} from "react-icons/io";
-import ProfileInputBox from "@/components/inputBox/profile-input-box";
+import ProfileInputBox from "@/components/inputBox/Text-Box/profile-input-box";
 import {FaRegFileAlt} from "react-icons/fa";
 import {RiDeleteBin6Line} from "react-icons/ri";
 

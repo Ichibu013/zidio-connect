@@ -1,18 +1,18 @@
-import AccountTypeToggle from "../toggles/AccoutTypeToggle";
-import ArrowButton from "../buttons/Arrow-Button";
-import Heading from "../misc/Heading";
-import InputBox from "../inputBox/input-box";
-import OR from "../misc/Or-seperator";
-import SocialButtons from "../buttons/Social-Buttons";
+import AccountTypeToggle from "../../toggles/AccoutTypeToggle";
+import ArrowButton from "../../buttons/Arrow-Button";
+import Heading from "../../misc/Heading";
+import InputBox from "../../inputBox/Text-Box/input-box";
+import OR from "../../misc/Or-seperator";
+import SocialButtons from "../../buttons/Social-Buttons";
 import { signup } from "@/services/auth/signupService";
 import { useEffect, useState } from "react";
-import PasswordBox from "../inputBox/password-box";
+import PasswordBox from "../../inputBox/Text-Box/password-box";
 import { IoArrowForward } from "react-icons/io5";
 import { useRouter } from "next/navigation";
-import BasicHeader from "../headers/BasicHeader";
-import TickBox from "../misc/TickBox";
-import SuccessToast from "../toasts/SucessToast";
-import ErrorToast from "../toasts/ErrorToast";
+import BasicHeader from "../../headers/BasicHeader";
+import TickBox from "../../misc/TickBox";
+import SuccessToast from "../../toasts/SucessToast";
+import ErrorToast from "../../toasts/ErrorToast";
 
 export default function SignupForm({ onToggle, isCandidate }) {
   // State to control the visibility of the popup, initialized to false to hide it

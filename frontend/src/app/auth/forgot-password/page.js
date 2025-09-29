@@ -1,5 +1,5 @@
-import TwoColumnLayout from "@/components/Layout/TwoColumnLayout";
-import ForgotPasswordForm from "@/components/forms/ForgotPasswordForm";
+import TwoColumnLayout from "@/components/Layout/Column-Layouts/TwoColumnLayout";
+import ForgotPasswordForm from "@/components/forms/Auth-Forms/ForgotPasswordForm";
 import HeroPanel from "@/components/panels/HeroPanel";
 
 export default function ForgotPassword() {

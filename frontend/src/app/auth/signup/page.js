@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import TwoColumnLayout from "@/components/Layout/TwoColumnLayout";
-import SignupForm from "@/components/forms/SignupForm";
+import TwoColumnLayout from "@/components/Layout/Column-Layouts/TwoColumnLayout";
+import SignupForm from "@/components/forms/Auth-Forms/SignupForm";
 import HeroPanel from "@/components/panels/HeroPanel";
 
 export default function Signup() {

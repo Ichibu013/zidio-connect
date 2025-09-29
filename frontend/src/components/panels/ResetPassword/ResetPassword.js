@@ -1,6 +1,6 @@
 "use client";
 import ArrowButton from "@/components/buttons/Arrow-Button";
-import PasswordBox from "@/components/inputBox/password-box";
+import PasswordBox from "@/components/inputBox/Text-Box/password-box";
 import ErrorToast from "@/components/toasts/ErrorToast";
 import SuccessToast from "@/components/toasts/SucessToast";
 import { resetPassword } from "@/services/auth/resetPasswordService";

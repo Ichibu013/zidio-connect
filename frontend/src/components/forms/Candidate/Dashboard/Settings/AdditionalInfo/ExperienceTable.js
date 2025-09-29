@@ -1,7 +1,7 @@
 'use client'
 import React, {useEffect, useRef, useState} from "react";
 import {IoIosAdd, IoIosClose} from "react-icons/io";
-import ProfileInputBox from "@/components/inputBox/profile-input-box";
+import ProfileInputBox from "@/components/inputBox/Text-Box/profile-input-box";
 import {RiDeleteBin6Line} from "react-icons/ri";
 
 export default function ExperienceTable({jobsData}) {

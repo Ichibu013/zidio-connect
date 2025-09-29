@@ -1,17 +1,17 @@
 'use client'
-import ArrowButton from "../buttons/Arrow-Button";
-import SocialButtons from "../buttons/Social-Buttons";
-import Heading from "../misc/Heading";
-import InputBox from "../inputBox/input-box";
-import OR from "../misc/Or-seperator";
+import ArrowButton from "../../buttons/Arrow-Button";
+import SocialButtons from "../../buttons/Social-Buttons";
+import Heading from "../../misc/Heading";
+import InputBox from "../../inputBox/Text-Box/input-box";
+import OR from "../../misc/Or-seperator";
 import { useState, useEffect } from "react";
 import { IoArrowForward } from "react-icons/io5";
 import { login } from "@/services/auth/loginService";
-import BasicHeader from "../headers/BasicHeader";
-import TickBox from "../misc/TickBox";
-import PasswordBox from "../inputBox/password-box";
-import SuccessToast from "../toasts/SucessToast";
-import ErrorToast from "../toasts/ErrorToast";
+import BasicHeader from "../../headers/BasicHeader";
+import TickBox from "../../misc/TickBox";
+import PasswordBox from "../../inputBox/Text-Box/password-box";
+import SuccessToast from "../../toasts/SucessToast";
+import ErrorToast from "../../toasts/ErrorToast";
 import { useRouter } from "next/navigation";
 
 export default function LoginForm() {

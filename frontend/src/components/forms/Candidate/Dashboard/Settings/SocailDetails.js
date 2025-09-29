@@ -1,6 +1,6 @@
 "use client";
 
-import SocialInputBox from "@/components/inputBox/SocialInputBox";
+import SocialInputBox from "@/components/inputBox/Text-Box/SocialInputBox";
 
 export default function SocailDetails() {
   return (

@@ -1,6 +1,6 @@
 import ArrowButton from "../buttons/Arrow-Button";
-import InputBox from "../inputBox/input-box";
-import TextAreaBox from "../inputBox/TextAreaBox";
+import InputBox from "../inputBox/Text-Box/input-box";
+import TextAreaBox from "../inputBox/Text-Box/TextAreaBox";
 import { BsFillSendFill } from "react-icons/bs";
 
 export default function GetInTouch() {

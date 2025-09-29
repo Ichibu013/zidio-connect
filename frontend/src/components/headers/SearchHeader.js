@@ -1,5 +1,5 @@
 "use client";
-import SeachInputBox from "../inputBox/SearchInputField";
+import SeachInputBox from "../inputBox/Text-Box/SearchInputField";
 import SearchHeaderActionBtns from "../panels/HeaderActionButtonPanels/SearchHeaderActionBtns";
 import LocationDropdown from "../misc/LocationDropDown";
 import {AiOutlineBarcode} from "react-icons/ai";

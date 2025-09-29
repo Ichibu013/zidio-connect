@@ -1,6 +1,6 @@
 import {IoIosAdd, IoIosClose} from "react-icons/io";
 import React, {useEffect, useRef, useState} from "react";
-import SelectBox from "@/components/inputBox/Select-box";
+import SelectBox from "@/components/inputBox/Text-Box/Select-box";
 import {MdOutlineRemoveCircleOutline} from "react-icons/md";
 import {RiDeleteBin6Line} from "react-icons/ri";
 

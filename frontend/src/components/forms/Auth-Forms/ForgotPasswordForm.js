@@ -1,15 +1,15 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Heading from "../misc/Heading";
-import InputBox from "../inputBox/input-box";
-import ArrowButton from "../buttons/Arrow-Button";
-import OR from "../misc/Or-seperator";
-import SocialButtons from "../buttons/Social-Buttons";
-import BasicHeader from "../headers/BasicHeader";
+import Heading from "../../misc/Heading";
+import InputBox from "../../inputBox/Text-Box/input-box";
+import ArrowButton from "../../buttons/Arrow-Button";
+import OR from "../../misc/Or-seperator";
+import SocialButtons from "../../buttons/Social-Buttons";
+import BasicHeader from "../../headers/BasicHeader";
 import { IoArrowForward } from "react-icons/io5";
 import { forgotPassword } from "@/services/auth/forgotPasswordService";
-import InfoToast from "../toasts/InfoToast";
-import ErrorToast from "../toasts/ErrorToast";
+import InfoToast from "../../toasts/InfoToast";
+import ErrorToast from "../../toasts/ErrorToast";
 import { useRouter } from "next/navigation";
 
 export default function ForgotPasswordForm() {

@@ -1,6 +1,6 @@
 import SearchHeader from "@/components/headers/SearchHeader";
 import SubHeader from "@/components/headers/SubHeader";
-import SmallTwoColumnLayout from "@/components/Layout/SmallTwoColumnLayout";
+import SmallTwoColumnLayout from "@/components/Layout/Column-Layouts/SmallTwoColumnLayout";
 import GoogleMap from "@/components/misc/Map";
 import ContactLeftPanel from "@/components/panels/Contact/ContactLeftPanel";
 import ContactRightPanel from "@/components/panels/Contact/ContactRightPanel";

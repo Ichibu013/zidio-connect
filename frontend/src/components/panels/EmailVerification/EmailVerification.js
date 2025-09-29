@@ -2,7 +2,7 @@
 "use client";
 import React, { useState } from "react";
 import { IoArrowForward } from "react-icons/io5";
-import PasswordBox from "@/components/inputBox/password-box";
+import PasswordBox from "@/components/inputBox/Text-Box/password-box";
 import ArrowButton from "@/components/buttons/Arrow-Button";
 import BasicHeader from "@/components/headers/BasicHeader";
 import { verifyEmail } from "@/services/auth/verifyEmailService";

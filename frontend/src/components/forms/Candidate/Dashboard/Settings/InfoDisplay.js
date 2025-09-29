@@ -1,10 +1,10 @@
 import React, {useState} from "react";
-import SelectBox from "../../../../inputBox/Select-box";
+import SelectBox from "../../../../inputBox/Text-Box/Select-box";
 import {FiUploadCloud} from "react-icons/fi";
 import CvItemBox from "../../../../Items/CvItem";
 import ResumeInput from "../../../../inputBox/Resume/ResumeInput";
 import {FaLink} from "react-icons/fa";
-import ProfileInputBox from "@/components/inputBox/profile-input-box";
+import ProfileInputBox from "@/components/inputBox/Text-Box/profile-input-box";
 
 export default function InfoDisplay() {
     const [uploadedCvs, setUploadedCvs] = useState([

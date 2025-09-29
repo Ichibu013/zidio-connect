@@ -1,4 +1,4 @@
-import EyeIcon from "../icons/Eye-Icon";
+import EyeIcon from "../../icons/Eye-Icon";
 import { useState } from "react";
 
 export default function PasswordBox({ placeholder, value, onChange }) {

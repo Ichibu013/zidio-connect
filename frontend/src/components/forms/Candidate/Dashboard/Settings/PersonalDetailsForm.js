@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import {FiItalic, FiUnderline} from "react-icons/fi";
-import SelectBox from "@/components/inputBox/Select-box";
+import SelectBox from "@/components/inputBox/Text-Box/Select-box";
 import {FaLink, FaListOl, FaListUl} from "react-icons/fa";
 import {RiBold} from "react-icons/ri";
 import {LuStrikethrough} from "react-icons/lu";
-import ProfileInputBox from "@/components/inputBox/profile-input-box";
+import ProfileInputBox from "@/components/inputBox/Text-Box/profile-input-box";
 
 export default function PersonalDetailsForm() {
     const [formData, setFormData] = useState({
