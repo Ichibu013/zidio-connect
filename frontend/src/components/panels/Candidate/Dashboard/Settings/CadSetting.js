@@ -4,6 +4,7 @@ import {useState} from "react";
 import PersonalDetailsForm from "@/components/forms/Candidate/Dashboard/Settings/PersonalDetailsForm";
 import TableLayout from "@/components/forms/Candidate/Dashboard/Settings/AdditionalInfo/TableLayout";
 import {AnimatePresence, motion} from "framer-motion"; // Import motion and AnimatePresence
+import SocailDetails from "@/components/forms/Candidate/Dashboard/Settings/SocailDetails";
 
 export default function CadSetting() {
     const [tab, setTab] = useState("Display");
@@ -68,6 +69,18 @@ export default function CadSetting() {
                         transition={{ duration: 0.3 }}
                     >
                         <TableLayout />
+                    </motion.div>
+                )}
+                {tab === "Social Links" && (
+                    <motion.div
+                        key="social-links"
+                        initial={{ x: 100, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        exit={{ x: -100, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        {/* Social Details Component */}
+                        <SocailDetails />
                     </motion.div>
                 )}
             </AnimatePresence>
