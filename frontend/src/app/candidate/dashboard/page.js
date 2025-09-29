@@ -69,7 +69,7 @@ export default function CandidateDashboard() {
         <SearchHeader btn1={<SignInBtn />} btn3={<PostAJobBtn />} />
       </header>
       <div className="flex bg-white h-[calc(96vh-100px)] font-sans">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row px-2 md:px-6 ">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row px-2 md:px-6 w-full relative">
           {/* Sidebar Navigation */}
           <DashboardSideNav
             heading={"CANDIDATE DASHBOARD"}

@@ -8,9 +8,6 @@ import {
 export default function SocialInputBox({}) {
   return (
     <div className="mb-6">
-      <label className="block text-gray-700 text-sm font-semibold mb-2">
-        Social Links
-      </label>
       <div className="space-y-4 ">
         {[
           {
@@ -34,19 +31,22 @@ export default function SocialInputBox({}) {
             icon: "FaInstagram",
           },
         ].map((social) => (
-          <div key={social.name} className="flex items-center gap-3 border border-gray-200 rounded-md px-3 min-w-full">
+          <div
+            key={social.name}
+            className="flex items-center gap-3 border border-gray-200 rounded-md px-3 min-w-full"
+          >
             <span className="mr-3">
               {social.icon === "FaFacebookF" && (
-                <FaFacebookF className="text-blue-600" />
+                <FaFacebookF className="text-blue-600" size={20} />
               )}
               {social.icon === "FaTwitter" && (
-                <FaTwitter className="text-blue-400" />
+                <FaTwitter className="text-blue-400" size={20}/>
               )}
               {social.icon === "FaLinkedinIn" && (
-                <FaLinkedinIn className="text-blue-700" />
+                <FaLinkedinIn className="text-blue-700" size={20}/>
               )}
               {social.icon === "FaInstagram" && (
-                <FaInstagram className="text-pink-500" />
+                <FaInstagram className="text-pink-500" size={20}/>
               )}
             </span>
             <span className="w-24 text-gray-600">{social.name}</span>
