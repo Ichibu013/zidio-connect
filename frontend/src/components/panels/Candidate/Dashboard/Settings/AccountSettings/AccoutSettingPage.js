@@ -8,23 +8,23 @@ import PrivacyPanel from "./Panels/PrivacyPanel";
 export default function AccountSettingsPage() {
   return (
     <>
-			{/* Contact Information Panel Component */}
+      {/* Contact Information Panel Component */}
       <ContactIInfoPanel />
       <div className="my-4 border-t border-gray-200" />
-			{/* Notification Settings Panel Component */}
-			<NotificationPanel />
-			<div className="my-4 border-t border-gray-200" />
-			{/* Alerts Settings Panel Component */}
-			<AlertsPanel />
-			<div className="my-4 border-t border-gray-200" />
-			{/* Change Password Panel Component */}
-			<ChangePasswordPanel />
-			<div className="my-4 border-t border-gray-200" />
-			{/* Privacy Settings Panel Component */}
-			<PrivacyPanel />
-			<div className="my-4 border-t border-gray-200" />
-			{/* Delete Account Panel Component */}
-			<DeleteAccountPanel />
+      {/* Notification Settings Panel Component */}
+      <NotificationPanel />
+      <div className="my-4 border-t border-gray-200" />
+      {/* Alerts Settings Panel Component */}
+      <AlertsPanel />
+      <div className="my-4 border-t border-gray-200" />
+      {/* Change Password Panel Component */}
+      <ChangePasswordPanel />
+      <div className="my-4 border-t border-gray-200" />
+      {/* Privacy Settings Panel Component */}
+      <PrivacyPanel />
+      <div className="my-4 border-t border-gray-200" />
+      {/* Delete Account Panel Component */}
+      <DeleteAccountPanel />
     </>
   );
 }

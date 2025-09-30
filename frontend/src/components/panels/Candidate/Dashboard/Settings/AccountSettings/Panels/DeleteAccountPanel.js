@@ -5,7 +5,7 @@ export default function DeleteAccountPanel() {
             <h3 className="text-xl font-semibold text-gray-700 mb-4">
                 Delete Account
             </h3>
-            <p className="text-gray-600">
+            <div className="text-gray-600">
                 Deleting your account will result in the permanent loss of the following data, and we will not be able to restore it for you:
                 <ul className="list-disc list-inside mt-2 font-bold">
                     <li>Your profile information</li>
@@ -16,9 +16,9 @@ export default function DeleteAccountPanel() {
                 </ul>
                 <br />
                 Please ensure that you have saved any important information before proceeding with the deletion of your account.
-            </p>
+            </div>
             <div className="mt-8 flex justify-end items-center">
-                <button className="bg-white hover:bg-red-600 text-red-600 hover:text-white font-semibold py-3 px-8 rounded-lg flex items-center hover:shadow-md transition-colors duration-300 ease-in-out">
+                <button className="cursor-pointer bg-white hover:bg-red-600 text-red-600 hover:text-white font-semibold py-3 px-8 rounded-lg flex items-center hover:shadow-md transition-colors duration-300 ease-in-out">
                     <IoCloseCircleOutline className="inline-block mr-2" size={20}/>
                     Delete Account
                 </button>

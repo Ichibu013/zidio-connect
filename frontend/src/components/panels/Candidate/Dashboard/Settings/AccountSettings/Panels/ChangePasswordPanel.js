@@ -22,7 +22,7 @@ export default function ChangePasswordPanel() {
         </div>
       </div>
       <div className="mt-8 flex justify-end">
-        <button className="bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg shadow-lg hover:bg-blue-700 transition-colors duration-200">
+        <button className="cursor-pointer bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg hover:shadow-md hover:bg-blue-700 transition-colors duration-200">
           Save Changes
         </button>
       </div>
