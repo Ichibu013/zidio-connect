@@ -11,8 +11,8 @@ export default function CadSetting() {
   const [tab, setTab] = useState("Display");
 
   return (
-    <div className="bg-white p-8 mb-6 **w-full**">
-      <h2 className="text-3xl font-semibold text-gray-800 mb-6 ">Setting</h2>
+    <div className="bg-white px-8 py-4 mb-3 **w-full**">
+      <h2 className="text-2xl font-semibold text-gray-800 mb-2">Setting</h2>
       {/* Top navigation for settings tabs */}
       <div className="flex space-x-4 border-b border-gray-200 mb-6">
         {Object.keys({

@@ -9,6 +9,8 @@ import {RiNotification4Line, RiStackLine} from "react-icons/ri";
 import {LuBookmark, LuBriefcase} from "react-icons/lu";
 import {useSearchParams} from "next/navigation";
 import CadSetting from "@/components/panels/Candidate/Dashboard/Settings/CadSetting";
+import OverviewPanel from "@/components/panels/Candidate/Dashboard/Overview/OverviewPanel";
+import AppliedJobsPanel from "@/components/panels/Candidate/Dashboard/AppliedJobs/AppliedJobsPanel";
 
 // Helper function to map the URL parameter to the tab name
 const getActiveTabFromUrl = (searchParams) => {
@@ -79,8 +81,8 @@ export default function CandidateDashboard() {
           {/* Main Content Area */}
           <div className="flex-1 h-full overflow-y-scroll scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-gray-100 absolute md:relative pb-20  ">
             {/* Conditional rendering based on active tab */}
-            {activeTab === "Overview" && null}
-            {activeTab === "Applied Jobs" && null}
+            {activeTab === "Overview" && <OverviewPanel />}
+            {activeTab === "Applied Jobs" && <AppliedJobsPanel />}
             {activeTab === "Favorite Jobs" && null}
             {activeTab === "Job Alert" && null}
             {activeTab === "Settings" && <CadSetting />}
